@@ -1357,10 +1357,11 @@ Default config values:
 		data.refine()
 
 		os.chdir(rundir)
+		'''
 		print 'Generating report...'
 		report = HTMLReportCreator()
 		report.create(data, outputpath)
-
+		'''
 		print 'Generating Json file...'
 		jsonfile = JsonCreator()
 		jsonfile.create(data, outputpath)
@@ -1370,6 +1371,5 @@ Default config values:
 		print 'Execution time %.5f secs, %.5f secs (%.2f %%) in external commands)' % (exectime_internal, exectime_external, (100.0 * exectime_external) / exectime_internal)
 
 g = GitStats()
-# g.run(sys.argv[1:])
+g.run(sys.argv[1:])
 # g.run(["repopath", "outputpath"])
-g.run(["/home/x/Github/bitcoin", "/home/x/Github/bitcoin-statistics"])
