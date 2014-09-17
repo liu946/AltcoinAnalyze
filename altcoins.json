@@ -1,1 +1,102 @@
-{"bitcoin": {"website": "https://bitcoin.org/", "logo": "https://bitcoin.org/img/logotop.svg", "repo_url": "https://github.com/bitcoin/bitcoin.git"}, "litecoin": {"website": "http://www.litecoin.org/", "logo": "https://litecoin.org/images/litecoin-logo-192-c45e2402.png", "repo_url": "https://github.com/litecoin-project/litecoin.git"}, "dogecoin": {"website": "http://dogecoin.com/", "logo": "http://dogecoin.com/imgs/dogecoin-300.png", "repo_url": "https://github.com/dogecoin/dogecoin.git"}}
+{
+    "Bitcoin": {
+        "website": "https://bitcoin.org/",
+        "logo": "https://bitcoin.org/img/logotop.svg",
+        "repo_url": "https://github.com/bitcoin/bitcoin.git"
+    },
+    "Litecoin": {
+        "website": "http://www.litecoin.org/",
+        "logo": "https://litecoin.org/images/litecoin-logo-192-c45e2402.png",
+        "repo_url": "https://github.com/litecoin-project/litecoin.git"
+    },
+    "Ripple": {
+        "website": "https://www.ripple.com",
+        "logo": "https://ripple.com/wp-content/uploads/2013/09/logo.png",
+        "repo_url": "https://github.com/ripple/ripple-client.git"
+    },
+    "BitSharesX": {
+        "website": "http://bitshares-x.info/",
+        "logo": "http://bitshares-x.info/img/btsx-logo-w.svg",
+        "repo_url": "https://github.com/dacsunlimited/bitsharesx.git"
+    },
+    "Nxt": {
+        "website": "http://nxt.org/",
+        "logo": "http://nxt.org/sites/default/files/NXT-logo-80.png",
+        "repo_url": "git clone https://bitbucket.org/JeanLucPicard/nxt.git"
+    },
+    "Dogecoin": {
+        "website": "http://dogecoin.com/",
+        "logo": "http://dogecoin.com/imgs/dogecoin-300.png",
+        "repo_url": "https://github.com/dogecoin/dogecoin.git"
+    },
+    "Peercoin": {
+        "website": "http://peercoin.net/",
+        "logo": "http://peercoin.net/assets/img/logos/logo.png",
+        "repo_url": "https://github.com/ppcoin/ppcoin.git"
+    },
+    "Darkcoin": {
+        "website": "http://www.darkcoin.io/",
+        "logo": "http://www.darkcoin.io/img/logo.png",
+        "repo_url": "https://github.com/darkcoinproject/darkcoin.git"
+    },
+    "Namecoin": {
+        "website": "http://namecoin.info/",
+        "logo": "http://namecoin.info/images/logo.png",
+        "repo_url": "https://github.com/namecoinq/namecoinq.git"
+    },
+    "Monero": {
+        "website": "http://www.monero.cc/",
+        "logo": "http://www.monero.cc/wordpress/wp-content/uploads/2014/04/logo3.jpg",
+        "repo_url": "https://github.com/monero-project/bitmonero.git"
+    },
+    "Counterparty": {
+        "website": "https://www.counterparty.co/",
+        "logo": "https://www.counterparty.co/wp-content/themes/counterparty/images/logo.png",
+        "repo_url": "https://github.com/CounterpartyXCP/Counterparty.git"
+    },
+    "BitcoinDark": {
+        "website": "http://bitcoindark.pw/",
+        "logo": "https://ip.bitcointalk.org/?u=http%3A%2F%2Fi46.photobucket.com%2Falbums%2Ff134%2Fbitcoindark1%2FOfficial%2520BitcoinDark%2520logos%2520and%2520images%2FBTCD1_zps6f35901a.png&t=544&c=P2Apfs9mWsxX2g",
+        "repo_url": "https://github.com/laowais/bitcoindark.git"
+    },
+    "BitShares PTS": {
+        "website": "http://bitshares.org/",
+        "logo": "http://x2.twomediaventures.com/wp-content/uploads/2014/04/bs-double-trans.png",
+        "repo_url": "https://github.com/BitShares/BitShares-PTS.git"
+    },
+    "BlackCoin": {
+        "website": "http://www.blackcoin.co/",
+        "logo": "http://www.blackcoin.co/img/navlogo2.png",
+        "repo_url": "https://github.com/rat4/blackcoin.git"
+    },
+    "XCurrency": {
+        "website": "http://www.xc-official.com/",
+        "logo": "http://www.xc-official.com/XC-logo-3D.png",
+        "repo_url": "https://github.com/melvinxie/xcurrency.git"
+    },
+    "Stellar": {
+        "website": "https://www.stellar.org/",
+        "logo": "这货没有logo你敢信？",
+        "repo_url": "https://github.com/stellar/我觉得这里面哪个都不是"
+    },
+    "Bytecoin": {
+        "website": "http://bytecoin.org/",
+        "logo": "http://bytecoin.org/download/bytecoin_logo.svg",
+        "repo_url": "https://github.com/amjuarez/bytecoin.git"
+    },
+    "Quark": {
+        "website": "http://www.qrk.cc/",
+        "logo": "http://www.qrk.cc/wp-content/uploads/2014/04/4.-Quark_Logo_Banner_Multi_Printablekopie.png",
+        "repo_url": "https://github.com/MaxGuevara/quark.git"
+    },
+    "Mastercoin": {
+        "website": "http://www.mastercoin.org/",
+        "logo": "http://res.cloudinary.com/hrscywv4p/image/upload/c_limit,h_540,w_720/qpnbh9jm0i7uvcab9goy.png",
+        "repo_url": "https://github.com/mastercoin-MSC/spec.git"
+    },
+    "Zetacoin": {
+        "website": "http://www.zeta-coin.org/",
+        "logo": "http://zetacoin.cc/wp-content/uploads/2013/12/test1.png",
+        "repo_url": "https://github.com/zetacoin/zetacoin.git"
+    }
+}
