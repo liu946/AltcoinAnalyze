@@ -76,8 +76,8 @@
     },
     "Stellar": {
         "website": "https://www.stellar.org/",
-        "logo": "这货没有logo你敢信？",
-        "repo_url": "https://github.com/stellar/我觉得这里面哪个都不是"
+        "logo": "",
+        "repo_url": "https://github.com/stellar/"
     },
     "Bytecoin": {
         "website": "http://bytecoin.org/",
