@@ -1,0 +1,22 @@
+import scrapy
+from altcoinsinfo.items import AltcoinsinfoItem
+
+class AltcoinsSpider(scrapy.Spider):
+
+	name = 'altcoins'
+
+	allowed_domains = ['coinmarketcap.com']
+	start_urls = ['http://coinmarketcap.com/']
+
+	def parse(self, response):
+		#sel = Selector(response)
+		for sel in response.xpath('//*[@id="currencies"]/tbody/tr'):
+			rank = sel.xpath('td[1]/text()').extract()
+			name = sel.xpath('td[2]/a/text()').extract()
+			market_cap = sel.xpath('td[3]/text()').extract()
+			print rank, name, market_cap
+			#item = BitcoinspiderItem()
+			#print(sel.extract())
+			#item['username'] = sel.xpath('./td[1]/text()').extract()
+			#print(item['username'])
+			#yield item
