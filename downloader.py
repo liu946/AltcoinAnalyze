@@ -17,7 +17,7 @@ class Downloader():
 		# Read altcoins.json
 		try:
 			fp = open('altcoins.json', 'r')
-			altcoins = json.loads(fp.readline())
+			altcoins = json.loads(fp.read())
 			fp.close()
 		except:
 			print 'Read altcoins.json failed!'
