@@ -31,7 +31,7 @@
         "website": "http://nxt.org/",
         "logo": "http://nxt.org/sites/default/files/NXT-logo-80.png",
         "repo_url": {
-            "git clone https://bitbucket.org/JeanLucPicard/nxt.git": 1
+            "https://bitbucket.org/JeanLucPicard/nxt.git": 1
         }
     },
     "Dogecoin": {
@@ -108,7 +108,7 @@
         "website": "https://www.stellar.org/",
         "logo": "",
         "repo_url": {
-            "https://github.com/stellar/": 1
+            "https://github.com/stellar/stellard.git": 1
         }
     },
     "Bytecoin": {
