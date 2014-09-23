@@ -1098,7 +1098,7 @@ plot 'lines_of_code.dat' using 1:2 w lines
 
 class JsonCreator:
 	def create(self, data, path):
-		fp = open(path + "/0utput.json", 'w')
+		fp = open(path + "/stats.json", 'w')
 		format = '%Y-%m-%d %H:%M:%S'
 		
 		# Index
@@ -1372,4 +1372,3 @@ Default config values:
 
 g = GitStats()
 g.run(sys.argv[1:])
-# g.run(["repopath", "outputpath"])
