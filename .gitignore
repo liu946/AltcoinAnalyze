@@ -2,3 +2,5 @@
 altcoins
 cache.json
 altcoinsinfo.json
+*.html
+*~
