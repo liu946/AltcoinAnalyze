@@ -5,3 +5,4 @@ altcoinsinfo.json
 *.html
 *~
 .Rhistory
+result/
