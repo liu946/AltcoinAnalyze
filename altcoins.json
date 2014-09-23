@@ -83,7 +83,7 @@
             "https://github.com/laowais/bitcoindark.git": 1
         }
     },
-    "BitShares PTS": {
+    "BitShares-PTS": {
         "website": "http://bitshares.org/",
         "logo": "http://x2.twomediaventures.com/wp-content/uploads/2014/04/bs-double-trans.png",
         "repo_url": {
