@@ -73,9 +73,9 @@ class Downloader():
 						os.system('git clone %s "%s/%s"' % (repo, repo_dir + altcoin, repo_name))
 						print 'Repo "%s"-"%s" cloned successful!' % (altcoin, repo_name)
 						
-					fp.write('{"repo_dir": "%s", "update_date": "%s"}%s' % (repo_dir + altcoin, time.strftime('%Y-%m-%d %H:%M:%S'), "}, " if repo == altcoins[altcoin]['repo_url'].keys()[-1] else ", "))
+					fp.write('"%s": {"repo_dir": "%s", "update_date": "%s"%s' % (repo_name, repo_dir + altcoin + '/' + repo_name, time.strftime('%Y-%m-%d %H:%M:%S'), "}" if repo == altcoins[altcoin]['repo_url'].keys()[-1] else "}, "))
 					repos_count += 1
-				fp.write("%s" % "}" if altcoin == altcoins.keys()[-1] else ", ")
+				fp.write("%s" % "}}" if altcoin == altcoins.keys()[-1] else "}, ")
 				altcoins_count += 1
 			fp.close()
 			
@@ -88,5 +88,5 @@ class Downloader():
 			time.sleep(sync_rate)
 			print '\n'
 
-#test = Downloader()
-#test.download()
+D = Downloader()
+D.download()
