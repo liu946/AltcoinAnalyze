@@ -3,6 +3,6 @@ altcoins
 cache.json
 altcoinsinfo.json
 *.html
-*~
 .Rhistory
-result/
+.RData
+cache/

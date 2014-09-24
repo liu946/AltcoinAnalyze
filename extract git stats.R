@@ -1,15 +1,19 @@
 #!/usr/bin/env Rscript
-if(!file.exists("altcoins")){
+library(jsonlite)
+if(file.exists("config.json")){
+  JSONconfig <- fromJSON("config.json")
+}
+if(!file.exists(JSONconfig$repo_dir)){
   q("no",0)
 }
-if(file.exists("result")){
-  file.remove("result")
+if(file.exists(JSONconfig$cache_dir)){
+  file.remove(JSONconfig$cache_dir)
 }
-dir.create("result")
-for(i in dir("altcoins")){
-  for(j in dir(file.path("altcoins",i))){
-    system(paste("./git-stats-json",file.path("altcoins",i,j),file.path("result",i)))
-    file.remove(file.path("result",i,"gitstats.cache"))
-    file.rename(file.path("result",i,"stats.json"),file.path("result",i,paste0(j,".json")))
+dir.create(JSONconfig$cache_dir)
+for(i in dir(JSONconfig$repo_dir)){
+  for(j in dir(file.path(JSONconfig$repo_dir,i))){
+    system(paste("./git-stats-json",file.path(JSONconfig$repo_dir,i,j),file.path(JSONconfig$cache_dir,i)))
+    file.remove(file.path(JSONconfig$cache_dir,i,"gitstats.cache"))
+    file.rename(file.path(JSONconfig$cache_dir,i,"stats.json"),file.path(JSONconfig$cache_dir,i,paste0(j,".json")))
   }
 }
