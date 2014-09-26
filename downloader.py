@@ -24,7 +24,7 @@ class Downloader():
 			print 'Read altcoins.json failed!'
 			exit(1)
 		
-		return config['repo_dir'], config['cache_dir'], config['sync_rate'], altcoins
+		return config['repo_dir'], config['cache_dir'], config['gitstats_dir'], config['sync_rate'], altcoins
 	
 	def get_altcoinsinfo(self):
 		os.popen('rm altcoinsinfo.json; cd altcoinsinfo; scrapy crawl altcoins -o ../altcoinsinfo.json; cd ..' )
@@ -36,10 +36,14 @@ class Downloader():
 
 		json.dump(info, open('altcoinsinfo.json', 'w'))
 	
+	def extract_gitstats(self, src, dst):
+		os.system('./git-stats-json "%s" "%s"' % (src, dst))
+		
+		
 	def download(self):
 		while True:
 			print 'Download start at %s.' % time.strftime('%Y-%m-%d %H:%M:%S')
-			repo_dir, cache_dir, sync_rate, altcoins = self.init()
+			repo_dir, cache_dir, gitstats_dir, sync_rate, altcoins = self.init()
 			print 'Initialized successful!'
 			altcoins_sum = len(altcoins)
 			print '%d altcoins repos to be cloned/synced:' % altcoins_sum
@@ -72,9 +76,14 @@ class Downloader():
 						print 'Cloning "%s"-"%s"...(%d/%d)' % (altcoin, repo_name, repos_count, repos_sum)
 						os.system('git clone %s "%s/%s"' % (repo, repo_dir + altcoin, repo_name))
 						print 'Repo "%s"-"%s" cloned successful!' % (altcoin, repo_name)
-						
+					
+					print 'Gathering data of "%s"-"%s"' % (altcoin, repo_name)
+					self.extract_gitstats(repo_dir + altcoin + '/' + repo_name, gitstats_dir + altcoin + '/' + repo_name)
+					print 'Done!'
+					
 					fp.write('"%s": {"repo_dir": "%s", "update_date": "%s"%s' % (repo_name, repo_dir + altcoin + '/' + repo_name, time.strftime('%Y-%m-%d %H:%M:%S'), "}" if repo == altcoins[altcoin]['repo_url'].keys()[-1] else "}, "))
 					repos_count += 1
+				
 				fp.write("%s" % "}}" if altcoin == altcoins.keys()[-1] else "}, ")
 				altcoins_count += 1
 			fp.close()
