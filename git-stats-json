@@ -1374,5 +1374,4 @@ Default config values:
 		print 'Execution time %.5f secs, %.5f secs (%.2f %%) in external commands)' % (exectime_internal, exectime_external, (100.0 * exectime_external) / exectime_internal)
 
 g = GitStats()
-#g.run(sys.argv[1:])
-g.run(['/home/x/Github/zccoin', './'])
+g.run(sys.argv[1:])
