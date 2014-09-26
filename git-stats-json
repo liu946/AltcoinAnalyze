@@ -1278,7 +1278,9 @@ class JsonCreator:
 		for ext in extensions:
 			files = data.extensions[ext]['files']
 			lines = data.extensions[ext]['lines']
-			obj['Extensions']['Extension-%s' % ext] = {'Files': files, 'FilesPercentage': (100.0 * files) / data.getTotalFiles(), 'Lines': lines, 'LinesPercentage': (100.0 * lines) / data.getTotalLOC(), 'Lines/File': lines / files}
+			
+			temp1 = ((100.0 * lines) / data.getTotalLOC()) if data.getTotalLOC() != 0 else None
+			obj['Extensions']['Extension-%s' % ext] = {'Files': files, 'FilesPercentage': (100.0 * files) / data.getTotalFiles(), 'Lines': lines, 'LinesPercentage': temp1, 'Lines/File': lines / files}
 		
 		# Lines
 		obj['LinesofCode'] = {}
