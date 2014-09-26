@@ -13,6 +13,7 @@ import subprocess
 import sys
 import time
 import zlib
+import json
 
 IMAGE_TYPE = 'svg'  # everything that gnuplot accepts, I guess 
 GNUPLOT_IMAGE_SPECIFICATIONS = {'svg':'','png':'transparent'} 
@@ -1098,22 +1099,23 @@ plot 'lines_of_code.dat' using 1:2 w lines
 
 class JsonCreator:
 	def create(self, data, path):
-		fp = open(path + "/stats.json", 'w')
 		format = '%Y-%m-%d %H:%M:%S'
+		obj = {}
 		
 		# Index
-		fp.write('{"ProjectName": "%s", ' % (data.projectname))
-		fp.write('"FirstCommitDate": "%s", ' % (data.getFirstCommitDate().strftime(format)))
-		fp.write('"LastCommitDate": "%s", ' % (data.getLastCommitDate().strftime(format)))
-		fp.write('"Age": %s, "ActiveDays": %s, "ActiveDaysPercentage": %3.2f, ' % (data.getCommitDeltaDays(), len(data.getActiveDays()), (100.0 * len(data.getActiveDays()) / data.getCommitDeltaDays())))
-		fp.write('"TotalFiles": %s, ' % (data.getTotalFiles()))
-		fp.write('"TotalLinesofCode": %s, "TotalLinesAdded": %d, "TotalLinesRemoved": %d, ' % (data.getTotalLOC(), data.total_lines_added, data.total_lines_removed))
-		fp.write('"TotalCommits": %s, "AverageCommitsPerActiveDay": %.lf, "AverageCommitsPerDay": %.1f, ' % (data.getTotalCommits(), float(data.getTotalCommits()) / len(data.getActiveDays()), float(data.getTotalCommits()) / data.getCommitDeltaDays()))
-		fp.write('"Authors": %s, ' % (data.getTotalAuthors()))
+		
+		obj['ProjectName'] = data.projectname
+		obj['FirstCommitDate'] = data.getFirstCommitDate().strftime(format)
+		obj['LastCommitDate'] = data.getLastCommitDate().strftime(format)
+		obj['Age'], obj['ActiveDays'], obj['ActiveDaysPercentage'] = data.getCommitDeltaDays(), len(data.getActiveDays()), (100.0 * len(data.getActiveDays()) / data.getCommitDeltaDays())
+		obj['TotalFiles'] = data.getTotalFiles()
+		obj['TotalLinesofCode'], obj['TotalLinesAdded'], obj['TotalLinesRemoved'] = data.getTotalLOC(), data.total_lines_added, data.total_lines_removed
+		obj['TotalCommits'], obj['AverageCommitsPerActiveDay'], obj['AverageCommitsPerDay'] = data.getTotalCommits(), float(data.getTotalCommits()) / len(data.getActiveDays()), float(data.getTotalCommits()) / data.getCommitDeltaDays()
+		obj['TotalAuthors'] = data.getTotalAuthors()
 		
 		# Weekly activity
 		WEEKS = 32
-		fp.write('"Last32Weeks": {')
+		obj['Last32Weeks'] = {}
 		
 		# generate weeks to show (previous N weeks from now)
 		now = datetime.datetime.now()
@@ -1133,94 +1135,93 @@ class JsonCreator:
 			percentage = 0
 			if weeks[i] in data.activity_by_year_week:
 				percentage = float(data.activity_by_year_week[weeks[i]]) / data.activity_by_year_week_peak
-			fp.write('"Week-%d": %s%s' % (32 - i, commits, "}, " if i == 31 else ", "))
+			obj['Last32Weeks']['Week-%d' % (32 - i)] = commits
 			
-		fp.write('"HourofDay": {')
+		obj['HourofDay'] = {}
 		hour_of_day = data.getActivityByHourOfDay()
 		totalcommits = data.getTotalCommits()
 
 		for i in range(0, 24):
 			if i in hour_of_day:
-				fp.write('"Hour-%d": {"Commits": %d, "Percentage": %.2f}%s' % (i, hour_of_day[i], (100.0 * hour_of_day[i]) / totalcommits, "}, " if i == 23 else ", "))
+				obj['HourofDay']['Hour-%d' % i] = {'Commits': hour_of_day[i], 'Percentage': (100.0 * hour_of_day[i]) / totalcommits}
 			else:
-				fp.write('"Hour-%d": {"Commits": 0, "Percentage": 0.00}%s' % (i, "}, " if i == 23 else ", "))
+				obj['HourofDay']['Hour-%d' % i] = {'Commits': 0, 'Percentage': 0.00}
 		
 		# Day of Week
 		day_of_week = data.getActivityByDayOfWeek()
-		fp.write('"DayofWeek": {')
+		obj['DayofWeek'] = {}
 		
 		for d in range(0, 7):
 			commits = 0
 
 			if d in day_of_week:
 				commits = day_of_week[d]
-				fp.write('"Day-%d": {"Commits": %d, "Percentage": %.2f}%s' % (d + 1, commits, (100.0 * day_of_week[d]) / totalcommits, "}, " if d == 6 else ", "))
+				obj['DayofWeek']['Day-%d' % (d + 1)] = {'Commits': commits, 'Percentage': (100.0 * day_of_week[d]) / totalcommits}
 			else:
-				fp.write('"Day-%d": {"Commits": 0, "Percentage": 0.00}%s' % (d + 1, "}, " if d == 6 else ", "))
+				obj['DayofWeek']['Day-%d' % (d + 1)] = {'Commits': 0, 'Percentage': 0.00}
 				
 		# Hour of Week
-		fp.write('"HourofWeek": {')
+		obj['HourofWeek'] = {}
 		for weekday in range(0, 7):
-			fp.write('"Weekday-%d": {' % (weekday + 1))
+			obj['HourofWeek']['Weekday-%d' % (weekday + 1)] = {}
+
 			for hour in range(0, 24):
 				try:
 					commits = data.activity_by_hour_of_week[weekday][hour]
 				except KeyError:
 					commits = 0
 				if commits != 0:
-					fp.write('"Hour-%d": %d%s' % (hour, commits, ("}" + ("" if weekday == 6 else ", ")) if hour == 23 else ", "))
+					obj['HourofWeek']['Weekday-%d' % (weekday + 1)]['Hour-%d' % hour] = commits
 				else:
-					fp.write('"Hour-%d": 0%s' % (hour, ("}" + ("" if weekday == 6 else ", ")) if hour == 23 else ", "))
-		fp.write('}, ')
+					obj['HourofWeek']['Weekday-%d' % (weekday + 1)]['Hour-%d' % hour] = 0
 		
 		# Month of Year
-		fp.write('"MonthofYear": {')
+		obj['MonthofYear'] = {}
 		for mm in range(1, 13):
 			commits = 0
 			if mm in data.activity_by_month_of_year:
 				commits = data.activity_by_month_of_year[mm]
-			fp.write('"Month-%d": {"Commits": %d, "Percentage": %.2f}%s' % (mm, commits, (100.0 * commits) / data.getTotalCommits(), "}, " if mm == 12 else ", "))
+			obj['MonthofYear']['Month-%d' % mm] = {'Commits': commits, 'Percentage': (100.0 * commits) / data.getTotalCommits()}
 
 		# Commits by year/month
-		fp.write('"CommitsbyYear/Month": {')
+		obj['CommitsbyYear/Month'] = {}
 		commits_by_month = sorted(data.commits_by_month.keys())
 		commits_by_month.reverse()
 		for yymm in commits_by_month:
-			fp.write('"Month-%s": %s%s' % (yymm, data.commits_by_month[yymm], "}, " if yymm == commits_by_month[-1] else ", "))
+			obj['CommitsbyYear/Month']['Month-%s' % yymm] = data.commits_by_month[yymm]
 			i += 1
 
 		# Commits by year
-		fp.write('"CommitsbyYear": {')
+		obj['CommitsbyYear'] = {}
 		commits_by_year = sorted(data.commits_by_year.keys())
 		commits_by_year.reverse()
 		for yy in commits_by_year:
-			fp.write('"Year-%d": {"Commits": %d, "Percentage": %.2f}%s' % (yy, data.commits_by_year[yy], (100.0 * data.commits_by_year[yy]) / data.getTotalCommits(), "}, " if yy == commits_by_year[-1] else ", "))
+			obj['CommitsbyYear']['Year-%d' % yy] = {'Commits': data.commits_by_year[yy], 'Percentage': (100.0 * data.commits_by_year[yy]) / data.getTotalCommits()}
 
 		# Commits by timezone
-		fp.write('"CommitsbyTimezone": {')
+		obj['CommitsbyTimezone'] = {}
 		max_commits_on_tz = max(data.commits_by_timezone.values())
 		commits_by_timezone = sorted(data.commits_by_timezone.keys(), key = lambda n : int(n))
 		for i in commits_by_timezone:
 			commits = data.commits_by_timezone[i]
-			fp.write('"Timezone-%s": %s%s' % (i, commits, "}, " if i == commits_by_timezone[-1] else ", "))
+			obj['CommitsbyTimezone']['Timezone-%s' % i] = commits
 
 		# Authors
-		fp.write('"Authors": {')
+		obj['Authors'] = {}
 
 		# Authors :: List of authors
 		getAuthors = data.getAuthors(conf['max_authors'])
 		for author in getAuthors:
 			info = data.getAuthorInfo(author)
-			fp.write('"%s": {"Commits": %d, "CommitsPercentage": %.2f, "LinesAdded": %d, "LinesRemoved": %d, "FirstCommitDate": "%s", "LastCommitDate": "%s", "Age": "%s", "ActiveDays": %d, "PlacebyCommits": %d%s' % (author, info['commits'], info['commits_frac'], info['lines_added'], info['lines_removed'], info['date_first'], info['date_last'], info['timedelta'], info['active_days'], info['place_by_commits'], "}}, " if author == getAuthors[-1] else "}, "))
+			obj['Authors'][author] = {'Commits': info['commits'], 'CommitsPercentage': info['commits_frac'], 'LinesAdded': info['lines_added'], 'LinesRemoved': info['lines_removed'], 'FirstCommitDate': info['date_first'], 'LastCommitDate': info['date_last'], 'Age': '%s' % info['timedelta'], 'ActiveDays': info['active_days'], 'PlacebyCommits': info['place_by_commits']}
 
 		allauthors = data.getAuthors()
 		if len(allauthors) > conf['max_authors']:
 			rest = allauthors[conf['max_authors']:]
-			fp.write('"Thesedidn\'tmakeittothetop": "%s", ' % ', '.join(rest))
-
+			obj['Thesedidn\'tmakeittothetop'] = ', '.join(rest)
 
 		# Authors :: Author of Month
-		fp.write('"AuthorofMonth": {')
+		obj['AuthorofMonth'] = {}
 		author_of_month = sorted(data.author_of_month.keys())
 		author_of_month.reverse()
 		for yymm in author_of_month:
@@ -1229,9 +1230,9 @@ class JsonCreator:
 			authors.reverse()
 			commits = data.author_of_month[yymm][authors[0]]
 			next = ', '.join(authors[1:5])
-			fp.write('"Month-%s": {"Author": "%s", "Commits":%d, "CommitsPercentage": "%.2f%% of %d", "NextTop5": "%s"%s' % (yymm, authors[0], commits, (100.0 * commits) / data.commits_by_month[yymm], data.commits_by_month[yymm], next, "}}, " if yymm == author_of_month[-1] else "}, "))
+			obj['AuthorofMonth']['Month-%s' % yymm] = {'Author': authors[0], 'Commits': commits, 'CommitsPercentage': '%.2f%% of %d' % ((100.0 * commits) / data.commits_by_month[yymm], data.commits_by_month[yymm]), 'NextTop5': next}
 
-		fp.write('"Author of Year": {')
+		obj['AuthorofYear'] = {}
 		author_of_year = sorted(data.author_of_year.keys())
 		author_of_year.reverse()
 		for yy in author_of_year:
@@ -1240,10 +1241,10 @@ class JsonCreator:
 			authors.reverse()
 			commits = data.author_of_year[yy][authors[0]]
 			next = ', '.join(authors[1:5])
-			fp.write('"Year-%s": {"Author": "%s", "Commits":%d, "CommitsPercentage": "%.2f%% of %d", "NextTop5": "%s"%s' % (yy, authors[0], commits, (100.0 * commits) / data.commits_by_year[yy], data.commits_by_year[yy], next, "}}, " if yy == author_of_year[-1] else "}, "))
+			obj['AuthorofYear']['Year-%s' % yy] = {'Author': authors[0], 'Commits': commits, 'CommitsPercentage': '%.2f%% of %d' % ((100.0 * commits) / data.commits_by_year[yy], data.commits_by_year[yy]), 'NextTop5': next}
 			
 		# Domains
-		fp.write('"CommitsbyDomains": {')
+		obj['CommitsbyDomains'] = {}
 		domains_by_commits = getkeyssortedbyvaluekey(data.domains, 'commits')
 		domains_by_commits.reverse() # most first
 		n = 0
@@ -1253,10 +1254,10 @@ class JsonCreator:
 			commits = 0
 			n += 1
 			info = data.getDomainInfo(domain)
-			fp.write('"Domain-%s": {"Commits": %d, "CommitsPercentage": %.2f%s' % (domain, info['commits'], (100.0 * info['commits'] / totalcommits), "}}, " if domain == domains_by_commits[-1] else "}, "))
+			obj['CommitsbyDomains']['Domain-%s' % domain] = {'Commits': info['commits'], 'CommitsPercentage': (100.0 * info['commits'] / totalcommits)}
 		
 		# Files
-		fp.write('"AverageFileSize": %.2f, ' % ((100.0 * data.getTotalLOC()) / data.getTotalFiles()))
+		obj['AverageFileSize'] = (100.0 * data.getTotalLOC()) / data.getTotalFiles()
 
 		# Files :: File count by date
 
@@ -1265,41 +1266,43 @@ class JsonCreator:
 		for stamp in sorted(data.files_by_stamp.keys()):
 			files_by_date.add('%s %d' % (datetime.datetime.fromtimestamp(stamp).strftime('%Y-%m-%d'), data.files_by_stamp[stamp]))
 
-		fp.write('"FilesCountbyDate": {')
+		obj['FilesCountbyDate'] = {}
 		files_by_date = sorted(list(files_by_date))
 		for line in files_by_date:
 			i = line.split()
-			fp.write('"Date-%s": %s%s' % (i[0], i[1], "}, " if line == files_by_date[-1] else ", "))
+			obj['FilesCountbyDate']['Date-%s' % i[0]] = i[1]
 
 		# Files :: Extensions
-		fp.write('"Extensions": {')
+		obj['Extensions'] = {}
 		extensions = sorted(data.extensions.keys());
 		for ext in extensions:
 			files = data.extensions[ext]['files']
 			lines = data.extensions[ext]['lines']
-			fp.write('"Extension-%s": {"Files": %d, "FilesPercentage": %.2f, "Lines": %d, "LinesPercentage": %.2f, "Lines/File": %d%s' % (ext, files, (100.0 * files) / data.getTotalFiles(), lines, (100.0 * lines) / data.getTotalLOC(), lines / files, "}}, " if ext == extensions[-1] else "}, "))
+			obj['Extensions']['Extension-%s' % ext] = {'Files': files, 'FilesPercentage': (100.0 * files) / data.getTotalFiles(), 'Lines': lines, 'LinesPercentage': (100.0 * lines) / data.getTotalLOC(), 'Lines/File': lines / files}
 		
 		# Lines
-		fp.write('"LinesofCode": {')
+		obj['LinesofCode'] = {}
 		changes_by_date = sorted(data.changes_by_date.keys())
 		for stamp in changes_by_date:
-			fp.write('"Date-%d": %d%s' % (stamp, data.changes_by_date[stamp]['lines'], "}, " if stamp == changes_by_date[-1] else ", "))
+			obj['LinesofCode']['Date-%d' % stamp] = data.changes_by_date[stamp]['lines']
 		
 		# Tags
-		fp.write('"TotalTags": %d' % len(data.tags))
+		obj['TotalTags'] = len(data.tags)
 		if len(data.tags) > 0:
-			fp.write(', "AverageCommitsPerTag": %.2f, ' % (1.0 * data.getTotalCommits() / len(data.tags)))
+			obj['AverageCommitsPerTag'] = 1.0 * data.getTotalCommits() / len(data.tags)
 
 		# sort the tags by date desc
+		obj['Tags'] = {}
 		tags_sorted_by_date_desc = map(lambda el : el[1], reversed(sorted(map(lambda el : (el[1]['date'], el[0]), data.tags.items()))))
 		for tag in tags_sorted_by_date_desc:
 			authorinfo = []
 			authors_by_commits = getkeyssortedbyvalues(data.tags[tag]['authors'])
 			for i in reversed(authors_by_commits):
 				authorinfo.append('%s (%d)' % (i, data.tags[tag]['authors'][i]))
-			fp.write('"%s": {"Date": "%s", "Commits": %d, "Authors": "%s"%s' % (tag, data.tags[tag]['date'], data.tags[tag]['commits'], ', '.join(authorinfo), "}}" if tag == tags_sorted_by_date_desc[-1] else "}, "))
+			obj['Tags'][tag] = {'Date': data.tags[tag]['date'], 'Commits': data.tags[tag]['commits'], 'Authors': ', '.join(authorinfo)}
 		
-		fp.write("}")
+		fp = open(path + "/stats.json", 'w')
+		fp.write(json.dumps(obj, sort_keys = False, indent = 4))
 		fp.close()
 
 		
@@ -1371,4 +1374,5 @@ Default config values:
 		print 'Execution time %.5f secs, %.5f secs (%.2f %%) in external commands)' % (exectime_internal, exectime_external, (100.0 * exectime_external) / exectime_internal)
 
 g = GitStats()
-g.run(sys.argv[1:])
+#g.run(sys.argv[1:])
+g.run(['/home/x/Github/zccoin', './'])
