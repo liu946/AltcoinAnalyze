@@ -51,15 +51,13 @@ class Downloader():
 			# Clone/Sync altcoins repo
 			dur_a = time.time()
 			
-			try:
-				fp = open('cache.json', 'w')
-			except:
-				print 'Failed to create/open cache.json!'
+			
 				
-			fp.write('{')
+			obj = {}
 			altcoins_count = 1
 			for altcoin in altcoins.keys():
-				fp.write('"%s": {' % altcoin)
+				obj[altcoin] = {}
+				#fp.write('"%s": {' % altcoin)
 				print 'Start Cloning/Syncing "%s" repo...(%d of %d)' % (altcoin, altcoins_count, altcoins_sum)
 				if not os.path.exists('%s' % (repo_dir + altcoin)):
 					os.system('mkdir "%s"' % (repo_dir + altcoin))
@@ -81,12 +79,17 @@ class Downloader():
 					self.extract_gitstats(repo_dir + altcoin + '/' + repo_name, gitstats_dir + altcoin + '/' + repo_name)
 					print 'Done!'
 					
-					fp.write('"%s": {"repo_dir": "%s", "update_date": "%s"%s' % (repo_name, repo_dir + altcoin + '/' + repo_name, time.strftime('%Y-%m-%d %H:%M:%S'), "}" if repo == altcoins[altcoin]['repo_url'].keys()[-1] else "}, "))
+					obj[altcoin][repo_name] = {'repo_dir': repo_dir + altcoin + '/' + repo_name, 'update_date': time.strftime('%Y-%m-%d %H:%M:%S')}
 					repos_count += 1
-				
-				fp.write("%s" % "}}" if altcoin == altcoins.keys()[-1] else "}, ")
 				altcoins_count += 1
-			fp.close()
+			
+			try:
+				fp = open('cache.json', 'w')
+				fp.write(json.dumps(obj, indent = 4))
+				fp.close()
+			except:
+				print 'Failed to create/open cache.json!'
+			
 			
 			print '\nAll altcoins repos have been cloned/synced at %s.' % time.strftime('%Y-%m-%d %H:%M:%S')
 			print '\nFetching altcoins rank and market cap...'
