@@ -7,3 +7,4 @@ altcoinsinfo.json
 .RData
 cache/
 stats
+*.pyc
