@@ -45,7 +45,7 @@
         "website": "http://www.darkcoin.io/",
         "logo": "http://www.darkcoin.io/img/logo.png",
         "repo_url": {
-            "https://github.com/darkcoinproject/darkcoin.git": 1
+            "https://github.com/darkcoin/darkcoin.git": 1
         }
     },
     "Namecoin": {

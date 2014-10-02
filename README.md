@@ -11,4 +11,10 @@ Judge altcoin's value by
 3. Visualize ...
 
 ### How to use
-...
+1. `python downloader.py`
+2. `sh main.sh`
+3. `python analyzer.py`
+
+(uptodate...)
+
+

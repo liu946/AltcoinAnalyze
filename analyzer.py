@@ -1,41 +1,44 @@
 # -*- coding: UTF-8 -*-
-##use - pybrain
+# ---------
+# Author liu 
+# 14.10.2
+# ---------
+# some meaning cols : "stargazers_count","subscribers_count","network_count","open_issues_count"
+# 						--star 				--watching			--fork		
+#
+# 			"TotalCommits","ActiveDays","ActiveDaysPercentage","TotalAuthors","TotalTags"
+# ---------
 
-# from github API 
-# "coin" "size" "star" "network" "subscriber"
 import json
-import httplib2
-# from pybrain.tools.shortcuts import buildNetwork
-# from pybrain.datasets import supervised
+import pandas as pd
+import numpy as np
 
-# net = buildNetwork(12,15,1)
-# ds = supervised.SupervisedDataSet(12,1)
+data=json.load(open("starfork.json"))
+globaldata=[]
+mainingcol=["TotalCommits","ActiveDays","ActiveDaysPercentage","TotalAuthors","TotalTags"]
+mainingcolinsf=["stargazers_count","watchers_count","forks","open_issues_count"]
+coindata = json.load(open("data.json"))
+datalist=[]
+coinindex=[]
+for xcoin in coindata:
+	_data={}
+	for xcol in mainingcol:
+		_data[xcol] = coindata[xcoin][xcol]
+	for xcol in mainingcolinsf:
+		if xcol in data[xcoin]:
+			_data[xcol] = data[xcoin][xcol]
+		else:
+			print xcoin ,xcol
+	# print xcoin," : ",_data
+	datalist.append(xcoin)
+	globaldata.append(_data)
+	
+df=pd.DataFrame(globaldata,index=datalist)
+summary=[]
+for i in datalist:
+	summary.append( (df.loc[i,:]-df.describe().loc['mean',:])/df.describe().loc['std',:] )
 
-# coindata = json.load(open("data.json"))
-# coininfo = json.load(open("altcoinsinfo.json"))
-
-# Download form GITHUB API
-def firstkey(dic):
-	for i in dic:
-		return i
-#https://api.github.com/repos/bitcoin/bitcoin
-coinurl={}
-
-coinurlinfo = json.load(open("altcoins.json"))
-for coin in coinurlinfo:
-	url=firstkey(coinurlinfo[coin]["repo_url"])
-	url=url.replace(".git","")
-	url=url.replace("https://github.com/","https://api.github.com/repos/")
-	print url
-	r,c = httplib2.Http().request(url)
-	data = json.load(c)
+print pd.DataFrame( summary, index=datalist )
 
 
 
-
-# for coin in coindata:
-# 	print coin , " - " #, coindata[coin]
-
-# 	ds.addSample(())
-# for coin in coininfo:
-# 	print coin , " - "

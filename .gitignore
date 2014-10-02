@@ -7,4 +7,5 @@ altcoinsinfo.json
 .RData
 cache/
 stats
+starfork.json
 *.pyc
