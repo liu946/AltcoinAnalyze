@@ -29,6 +29,8 @@ class Downloader():
 	def get_altcoinsinfo(self):
 		os.popen('rm altcoinsinfo.json; cd altcoinsinfo; scrapy crawl altcoins -o ../altcoinsinfo.json; cd ..' )
 		info = json.load(open('altcoinsinfo.json', 'r'))
+		
+		# fix the info format
 		for i in info:
 			i['market_cap'] = int(i['market_cap'][0].replace(' ', '').replace(r'\n', '').replace(',', '').replace('$', ''))
 			i['name'] = i['name'][0]
@@ -42,6 +44,7 @@ class Downloader():
 		
 	def download(self):
 		while True:
+			# Initialize
 			print 'Download start at %s.' % time.strftime('%Y-%m-%d %H:%M:%S')
 			repo_dir, cache_dir, gitstats_dir, sync_rate, altcoins = self.init()
 			print 'Initialized successful!'
@@ -51,13 +54,10 @@ class Downloader():
 			# Clone/Sync altcoins repo
 			dur_a = time.time()
 			
-			
-				
 			obj = {}
 			altcoins_count = 1
 			for altcoin in altcoins.keys():
 				obj[altcoin] = {}
-				#fp.write('"%s": {' % altcoin)
 				print 'Start Cloning/Syncing "%s" repo...(%d of %d)' % (altcoin, altcoins_count, altcoins_sum)
 				if not os.path.exists('%s' % (repo_dir + altcoin)):
 					os.system('mkdir "%s"' % (repo_dir + altcoin))
