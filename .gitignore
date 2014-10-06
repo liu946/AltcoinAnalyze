@@ -2,10 +2,10 @@
 altcoins
 cache.json
 altcoinsinfo.json
+stats.json
 *.html
 .Rhistory
 .RData
 cache/
 stats
-starfork.json
 *.pyc
