@@ -3,6 +3,7 @@
 import os
 import json
 import time
+import httplib2
 
 class Downloader():
 	def init(self):
@@ -54,9 +55,11 @@ class Downloader():
 			# Clone/Sync altcoins repo
 			dur_a = time.time()
 			
+			stats = {}
 			obj = {}
 			altcoins_count = 1
 			for altcoin in altcoins.keys():
+				stats[altcoin] = {}
 				obj[altcoin] = {}
 				print 'Start Cloning/Syncing "%s" repo...(%d of %d)' % (altcoin, altcoins_count, altcoins_sum)
 				if not os.path.exists('%s' % (repo_dir + altcoin)):
@@ -77,6 +80,18 @@ class Downloader():
 					
 					print 'Gathering data of "%s"-"%s"' % (altcoin, repo_name)
 					self.extract_gitstats(repo_dir + altcoin + '/' + repo_name, gitstats_dir + altcoin + '/' + repo_name)
+					
+					try:
+						fp = open(gitstats_dir + altcoin + '/' + repo_name + '/stats.json', 'r')
+						stats[altcoin][repo_name] = json.loads(fp.read())
+						fp.close()
+					except:
+						print 'Failed to read ' + gitstats_dir + altcoin + '/' + repo_name + '/stats.json'
+					
+					url = repo.replace(".git","").replace("https://github.com/","https://api.github.com/repos/")
+					tmp1, tmp2 = httplib2.Http().request(url)
+					stats[altcoin][repo_name].update(json.loads(tmp2))
+					
 					print 'Done!'
 					
 					obj[altcoin][repo_name] = {'repo_dir': repo_dir + altcoin + '/' + repo_name, 'update_date': time.strftime('%Y-%m-%d %H:%M:%S')}
@@ -89,6 +104,13 @@ class Downloader():
 				fp.close()
 			except:
 				print 'Failed to create/open cache.json!'
+				
+			try:
+				fp = open('stats.json', 'w')
+				fp.write(json.dumps(stats, indent = 4))
+				fp.close()
+			except:
+				print 'Failed to create/open stats.json!'
 			
 			
 			print '\nAll altcoins repos have been cloned/synced at %s.' % time.strftime('%Y-%m-%d %H:%M:%S')
