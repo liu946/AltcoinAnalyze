@@ -11,10 +11,13 @@ Judge altcoin's value by
 3. Visualize ...
 
 ### How to use
-1. `python downloader.py`
-2. `sh main.sh`
-3. `python analyzer.py`
+`python main.py`
 
+### Lib Required
+pandas
+numpy
+pylab
+matplotlib
 (uptodate...)
 
 
