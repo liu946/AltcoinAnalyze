@@ -13,6 +13,7 @@ import json
 import pandas as pd
 from numpy import *
 from pylab import *
+from math import *
 from pca import pca
 
 # 获取github api数据文件
@@ -47,15 +48,22 @@ for xcoin in coindata:
 	globaldata.append(_data)
 	globaldatalist.append(_datalist)
 	
-# print globaldatalist
 # table 型数据
-summary= []
-df=pd.DataFrame(globaldata,index=datalist)
-for i in datalist:
-	summary.append( (df.loc[i,:]-df.describe().loc['mean',:])/df.describe().loc['std',:] )
-dt = pd.DataFrame( summary, index=datalist )
 
-x,y,evals,evecs = pca(globaldatalist,1)
+df=pd.DataFrame(globaldata,index=datalist)
+
+##############
+#归一化整理
+#方法1，标准分
+dt = (df-df.describe().loc['mean',:])/df.describe().loc['std',:]
+
+#方法2，/最大值
+do = df / df.describe().loc['max',:]
+
+
+# ##############
+# #主成分分析
+# x,y,evals,evecs = pca(globaldatalist,1)
 
 # # 贡献律
 # gxpersent = evals/sum(evals)
@@ -65,7 +73,7 @@ x,y,evals,evecs = pca(globaldatalist,1)
 
 # 一维化数据
 dattest={}
-print "一维化数据：\n"
+print "一维化数据方式1（主成分分析）：\n"
 for i in range(0,x[0].__len__()):
 	print datalist[i]," : ",x[0][i],"\n"
 	dattest[datalist[i]] =x[0][i]
@@ -75,4 +83,40 @@ for i in maklist:
 	if i["name"] in dattest:
 		print i['name'] , " : ",dattest[i['name']]
 
+############
+# 雷达图面积法
+# 贡献角度 平均。
 
+#准备角度
+sita = 2 * 3.142 / datalist.__len__()
+#准备列
+sumarray=[]
+for i in range(0, do.index.__len__() ):
+	sumarea=0
+	for j in range(0, do.columns.__len__()):
+		sumarea+= do.iloc[i,j] * do.iloc[i,j-1] * sin(sita)
+
+	sumarray.append(sumarea)
+
+do.loc[:,'area']=sumarray
+
+
+print "方式2（雷达图面积）：\n"
+# 输出雷达图面积
+for i in maklist:
+	if i["name"] in datalist:
+		print i['name'] , " : ",do.loc[i['name'],'area']
+
+# # 输出雷达图 html 图形
+# filehandle = open("./html/radar_data.js","w")
+
+# for i in maklist:
+# 	if i["name"] in datalist:
+# 		filehandle.write("")
+
+# 		print i['name'] , " : ",do.loc[i['name'],'area']
+
+# filehandle.write("")
+
+
+# filehandle.close()
