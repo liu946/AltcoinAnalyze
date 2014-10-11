@@ -18,6 +18,4 @@ pandas
 numpy
 pylab
 matplotlib
-(uptodate...)
-
-
+`apt-get install python-numpy python-scipy python-matplotlib python-pandas`
