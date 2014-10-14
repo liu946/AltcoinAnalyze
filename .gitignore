@@ -8,7 +8,6 @@ stats.json
 .RData
 cache/
 stats
-starfork.json
 *.pyc
 html
 
