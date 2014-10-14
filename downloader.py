@@ -79,6 +79,7 @@ class Downloader():
 				print 'Gathering data of "%s"-"%s"' % (altcoin, repo_name)
 				self.extract_gitstats(repo_dir + altcoin + '/' + repo_name, gitstats_dir + altcoin + '/' + repo_name)
 				
+				# Collect data from stats.json in each repo
 				try:
 					fp = open(gitstats_dir + altcoin + '/' + repo_name + '/stats.json', 'r')
 					stats[altcoin][repo_name] = json.loads(fp.read())
@@ -86,9 +87,33 @@ class Downloader():
 				except:
 					print 'Failed to read ' + gitstats_dir + altcoin + '/' + repo_name + '/stats.json'
 				
+				# Call Github API to collect repo data
 				url = repo.replace(".git","").replace("https://github.com/","https://api.github.com/repos/")
 				tmp1, tmp2 = httplib2.Http().request(url)
 				stats[altcoin][repo_name].update(json.loads(tmp2))
+				
+				# Removed invalid data
+				if stats[altcoin][repo_name]['fork'] == True:
+					created_at_year, created_at_month = stats[altcoin][repo_name]['created_at'][:7].split("-")
+					created_at_year, created_at_month = int(created_at_year), int(created_at_month)
+					updated_at_year, update_at_month = stats[altcoin][repo_name]['updated_at'][:7].split("-")
+					updated_at_year, update_at_month = int(updated_at_year), int(update_at_month)
+					actual_commits = 0
+					
+					for month in range(created_at_month, 13):
+						if 'Month-%04d-%02d' % (created_at_year, month) in stats[altcoin][repo_name]['CommitsbyYear/Month']:
+							actual_commits += stats[altcoin][repo_name]['CommitsbyYear/Month']['Month-%04d-%02d' % (created_at_year, month)]
+					
+					for month in range(1, update_at_month + 1):
+						if 'Month-%04d-%02d' % (updated_at_year, month) in stats[altcoin][repo_name]['CommitsbyYear/Month']:
+							actual_commits += stats[altcoin][repo_name]['CommitsbyYear/Month']['Month-%04d-%02d' % (updated_at_year, month)]
+					
+					for year in range(created_at_year + 1, updated_at_year):
+						for month in range(1, 13):
+							if 'Month-%04d-%02d' % (year, month) in stats[altcoin][repo_name]['CommitsbyYear/Month']:
+								actual_commits += stats[altcoin][repo_name]['CommitsbyYear/Month']['Month-%04d-%02d' % (year, month)]
+					
+					stats[altcoin][repo_name]['ActualTotalCommits']  = actual_commits	
 				
 				print 'Done!'
 				
@@ -96,13 +121,15 @@ class Downloader():
 				repos_count += 1
 			altcoins_count += 1
 		
+		# Record sync time to cache.json in root dir
 		try:
 			fp = open('cache.json', 'w')
 			fp.write(json.dumps(obj, indent = 4))
 			fp.close()
 		except:
 			print 'Failed to create/open cache.json!'
-			
+		
+		# Write all data to stats.json in root dir
 		try:
 			fp = open('stats.json', 'w')
 			fp.write(json.dumps(stats, indent = 4))
