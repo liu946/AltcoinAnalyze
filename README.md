@@ -14,8 +14,12 @@ Judge altcoin's value by
 `python main.py`
 
 ### Lib Required
-pandas
-numpy
-pylab
-matplotlib
+pip: 
+`apt-get install python-pip python-dev build-essential`
+`pip install --upgrade pip`
+
+scrapy: 
+`pip install Scrapy`
+
+pandas, numpy, pylab, matplotlib: 
 `apt-get install python-numpy python-scipy python-matplotlib python-pandas`
