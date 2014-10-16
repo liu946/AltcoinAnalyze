@@ -1113,7 +1113,7 @@ class JsonCreator:
 		obj['TotalCommits'], obj['AverageCommitsPerActiveDay'], obj['AverageCommitsPerDay'] = data.getTotalCommits(), float(data.getTotalCommits()) / len(data.getActiveDays()), float(data.getTotalCommits()) / data.getCommitDeltaDays()
 		obj['TotalAuthors'] = data.getTotalAuthors()
 		
-		# Weekly activity
+		'''# Weekly activity
 		WEEKS = 32
 		obj['Last32Weeks'] = {}
 		
@@ -1182,14 +1182,13 @@ class JsonCreator:
 			if mm in data.activity_by_month_of_year:
 				commits = data.activity_by_month_of_year[mm]
 			obj['MonthofYear']['Month-%d' % mm] = {'Commits': commits, 'Percentage': (100.0 * commits) / data.getTotalCommits()}
-
+		'''
 		# Commits by year/month
 		obj['CommitsbyYear/Month'] = {}
 		commits_by_month = sorted(data.commits_by_month.keys())
 		commits_by_month.reverse()
 		for yymm in commits_by_month:
 			obj['CommitsbyYear/Month']['Month-%s' % yymm] = data.commits_by_month[yymm]
-			i += 1
 
 		# Commits by year
 		obj['CommitsbyYear'] = {}
@@ -1198,14 +1197,14 @@ class JsonCreator:
 		for yy in commits_by_year:
 			obj['CommitsbyYear']['Year-%d' % yy] = {'Commits': data.commits_by_year[yy], 'Percentage': (100.0 * data.commits_by_year[yy]) / data.getTotalCommits()}
 
-		# Commits by timezone
+		'''# Commits by timezone
 		obj['CommitsbyTimezone'] = {}
 		max_commits_on_tz = max(data.commits_by_timezone.values())
 		commits_by_timezone = sorted(data.commits_by_timezone.keys(), key = lambda n : int(n))
 		for i in commits_by_timezone:
 			commits = data.commits_by_timezone[i]
 			obj['CommitsbyTimezone']['Timezone-%s' % i] = commits
-
+		'''
 		# Authors
 		obj['Authors'] = {}
 
@@ -1216,7 +1215,7 @@ class JsonCreator:
 			obj['Authors'][author] = {'Commits': info['commits'], 'CommitsPercentage': info['commits_frac'], 'LinesAdded': info['lines_added'], 'LinesRemoved': info['lines_removed'], 'FirstCommitDate': info['date_first'], 'LastCommitDate': info['date_last'], 'Age': '%s' % info['timedelta'], 'ActiveDays': info['active_days'], 'PlacebyCommits': info['place_by_commits']}
 
 		allauthors = data.getAuthors()
-		if len(allauthors) > conf['max_authors']:
+		'''if len(allauthors) > conf['max_authors']:
 			rest = allauthors[conf['max_authors']:]
 			obj['Thesedidn\'tmakeittothetop'] = ', '.join(rest)
 
@@ -1281,14 +1280,14 @@ class JsonCreator:
 			
 			temp1 = ((100.0 * lines) / data.getTotalLOC()) if data.getTotalLOC() != 0 else None
 			obj['Extensions']['Extension-%s' % ext] = {'Files': files, 'FilesPercentage': (100.0 * files) / data.getTotalFiles(), 'Lines': lines, 'LinesPercentage': temp1, 'Lines/File': lines / files}
-		
+		'''
 		# Lines
 		obj['LinesofCode'] = {}
 		changes_by_date = sorted(data.changes_by_date.keys())
 		for stamp in changes_by_date:
-			obj['LinesofCode']['Date-%d' % stamp] = data.changes_by_date[stamp]['lines']
+			obj['LinesofCode']['Date-%s' % time.strftime('%Y-%m-%d %X', time.localtime(stamp))] = data.changes_by_date[stamp]['lines']
 		
-		# Tags
+		'''# Tags
 		obj['TotalTags'] = len(data.tags)
 		if len(data.tags) > 0:
 			obj['AverageCommitsPerTag'] = 1.0 * data.getTotalCommits() / len(data.tags)
@@ -1302,7 +1301,7 @@ class JsonCreator:
 			for i in reversed(authors_by_commits):
 				authorinfo.append('%s (%d)' % (i, data.tags[tag]['authors'][i]))
 			obj['Tags'][tag] = {'Date': data.tags[tag]['date'], 'Commits': data.tags[tag]['commits'], 'Authors': ', '.join(authorinfo)}
-		
+		'''
 		fp = open(path + "/stats.json", 'w')
 		fp.write(json.dumps(obj, sort_keys = False, indent = 4))
 		fp.close()
