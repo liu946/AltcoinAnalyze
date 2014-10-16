@@ -8,6 +8,8 @@ import json
 import time
 import httplib2
 
+loop = False
+
 while True:
 	try:
 		fp = open('config.json', 'r')
@@ -28,4 +30,7 @@ while True:
 	# Visualize
 	# -----------------
 	
+	if not loop:
+		exit(0)
+
 	time.sleep(sync_rate)
