@@ -29,7 +29,11 @@ class Downloader():
 	
 	def get_altcoinsinfo(self):
 		os.popen('rm altcoinsinfo.json; cd altcoinsinfo; scrapy crawl altcoins -o ../altcoinsinfo.json; cd ..' )
-		info = json.load(open('altcoinsinfo.json', 'r'))
+		try:
+			info = json.load(open('altcoinsinfo.json', 'r'))
+		except:
+			print 'Read altcoinsinfo.json failed!'
+			return
 		
 		# fix the info format
 		for i in info:
