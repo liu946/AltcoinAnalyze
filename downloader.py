@@ -25,12 +25,13 @@ class Downloader():
 			print 'Read altcoins.json failed!'
 			exit(1)
 		
-		return config['repo_dir'], config['cache_dir'], config['gitstats_dir'], altcoins
+		return config['repo_dir'], config['cache_dir'], config['gitstats_dir'], altcoins, config['stats_factors'], config['api_factors']
 	
 	def get_altcoinsinfo(self):
-		os.popen('rm altcoinsinfo.json; cd altcoinsinfo; scrapy crawl altcoins -o ../altcoinsinfo.json; cd ..' )
+		os.popen('cd altcoinsinfo; scrapy crawl altcoins -o ../altcoinsinfo~.json; cd ..' )
 		try:
-			info = json.load(open('altcoinsinfo.json', 'r'))
+			info = json.load(open('altcoinsinfo~.json', 'r'))
+			os.popen('rm altcoinsinfo.json; mv altcoinsinfo~.json altcoinsinfo.json')
 		except:
 			print 'Read altcoinsinfo.json failed!'
 			return
@@ -49,7 +50,7 @@ class Downloader():
 	def download(self):
 		# Initialize
 		print 'Download start at %s.' % time.strftime('%Y-%m-%d %H:%M:%S')
-		repo_dir, cache_dir, gitstats_dir, altcoins = self.init()
+		repo_dir, cache_dir, gitstats_dir, altcoins, stats_factors, api_factors = self.init()
 		print 'Initialized successful!'
 		altcoins_sum = len(altcoins)
 		print '%d altcoins repos to be cloned/synced:' % altcoins_sum
@@ -62,6 +63,8 @@ class Downloader():
 		altcoins_count = 1
 		for altcoin in altcoins.keys():
 			stats[altcoin] = {}
+			for factor in stats_factors + api_factors:
+				stats[altcoin][factor] = 0
 			obj[altcoin] = {}
 			print 'Start Cloning/Syncing "%s" repo...(%d of %d)' % (altcoin, altcoins_count, altcoins_sum)
 			if not os.path.exists('%s' % (repo_dir + altcoin)):
@@ -86,7 +89,7 @@ class Downloader():
 				# Collect data from stats.json in each repo
 				try:
 					fp = open(gitstats_dir + altcoin + '/' + repo_name + '/stats.json', 'r')
-					stats[altcoin][repo_name] = json.loads(fp.read())
+					tmp = json.loads(fp.read())
 					fp.close()
 				except:
 					print 'Failed to read ' + gitstats_dir + altcoin + '/' + repo_name + '/stats.json'
@@ -94,35 +97,44 @@ class Downloader():
 				# Call Github API to collect repo data
 				url = repo.replace(".git","").replace("https://github.com/","https://api.github.com/repos/")
 				tmp1, tmp2 = httplib2.Http().request(url)
-				stats[altcoin][repo_name].update(json.loads(tmp2))
+				tmp2 = json.loads(tmp2)
+				
+				for factor in api_factors:
+					stats[altcoin][factor] += tmp2[factor] * altcoins[altcoin]['repo_url'][repo]
+				# stats[altcoin].update(json.loads(tmp2))
 				
 				# Removed invalid data
-				if stats[altcoin][repo_name]['fork'] == True:
-					created_at_year, created_at_month = stats[altcoin][repo_name]['created_at'][:7].split("-")
+				if tmp2['fork'] == True:
+					created_at_year, created_at_month = tmp2['created_at'][:7].split("-")
 					created_at_year, created_at_month = int(created_at_year), int(created_at_month)
-					updated_at_year, update_at_month = stats[altcoin][repo_name]['updated_at'][:7].split("-")
+					updated_at_year, update_at_month = tmp2['updated_at'][:7].split("-")
 					updated_at_year, update_at_month = int(updated_at_year), int(update_at_month)
 					actual_commits = 0
 					
 					for month in range(created_at_month, 13):
-						if 'Month-%04d-%02d' % (created_at_year, month) in stats[altcoin][repo_name]['CommitsbyYear/Month']:
-							actual_commits += stats[altcoin][repo_name]['CommitsbyYear/Month']['Month-%04d-%02d' % (created_at_year, month)]
+						if 'Month-%04d-%02d' % (created_at_year, month) in tmp['CommitsbyYear/Month']:
+							actual_commits += tmp['CommitsbyYear/Month']['Month-%04d-%02d' % (created_at_year, month)]
 					
 					for month in range(1, update_at_month + 1):
-						if 'Month-%04d-%02d' % (updated_at_year, month) in stats[altcoin][repo_name]['CommitsbyYear/Month']:
-							actual_commits += stats[altcoin][repo_name]['CommitsbyYear/Month']['Month-%04d-%02d' % (updated_at_year, month)]
+						if 'Month-%04d-%02d' % (updated_at_year, month) in tmp['CommitsbyYear/Month']:
+							actual_commits += tmp['CommitsbyYear/Month']['Month-%04d-%02d' % (updated_at_year, month)]
 					
 					for year in range(created_at_year + 1, updated_at_year):
 						for month in range(1, 13):
-							if 'Month-%04d-%02d' % (year, month) in stats[altcoin][repo_name]['CommitsbyYear/Month']:
-								actual_commits += stats[altcoin][repo_name]['CommitsbyYear/Month']['Month-%04d-%02d' % (year, month)]
+							if 'Month-%04d-%02d' % (year, month) in tmp['CommitsbyYear/Month']:
+								actual_commits += tmp['CommitsbyYear/Month']['Month-%04d-%02d' % (year, month)]
 					
-					stats[altcoin][repo_name]['ActualTotalCommits']  = actual_commits	
+					stats[altcoin]['TotalCommits']  = actual_commits	
+				
+				# Get the sum
+				for factor in stats_factors:
+					stats[altcoin][factor] += tmp[factor] * altcoins[altcoin]['repo_url'][repo]
 				
 				print 'Done!'
 				
 				obj[altcoin][repo_name] = {'repo_dir': repo_dir + altcoin + '/' + repo_name, 'update_date': time.strftime('%Y-%m-%d %H:%M:%S')}
 				repos_count += 1
+				
 			altcoins_count += 1
 		
 		# Record sync time to cache.json in root dir
