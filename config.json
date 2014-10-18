@@ -1,1 +1,1 @@
-{"repo_dir": "./altcoins/", "cache_dir": "./cache/", "gitstats_dir": "./stats/", "sync_rate": 86400}
+{"repo_dir": "./altcoins/", "cache_dir": "./cache/", "gitstats_dir": "./stats/", "stats_factors": ["TotalCommits","ActiveDays","ActiveDaysPercentage","TotalAuthors"], "api_factors": ["stargazers_count","watchers_count","forks","open_issues_count"], "sync": false, "sync_rate": 86400}
