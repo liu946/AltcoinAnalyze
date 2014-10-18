@@ -10,4 +10,4 @@ cache/
 stats
 *.pyc
 html
-
+*.json
