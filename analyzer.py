@@ -134,52 +134,14 @@ class Analyzer:
 						}'''%(do.columns[j], do.loc[i['name'],:][j]))
 					if j!= do.columns.__len__()-2:
 						filehandle.write(',')
-				filehandle.write('''],
-					
-					
-						categoryField: "item",
-						startDuration: 2,
-					
-					
-						valueAxes: [{
-							axisAlpha: 0.15,
-							minimum: 0,
-							maximum: 1,
-							dashLength: 3,
-							axisTitleOffset: 20,
-							gridCount: 5
-						}],
-					
-						graphs: [{
-							valueField: "data",
-							bullet: "round",
-							balloonText: "[[value]]"
-						}]
-					
-					});\n''')
+				filehandle.write(open("./html/tpl/jsconfig.tpl").read())
 		filehandle.close()
 		filehandle=open("./html/radar_data.html","w")
-		filehandle.write('''
-			<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-		<html>
-			
-			<head>
-				<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-				<title>amCharts examples</title>
-				<link rel="stylesheet" href="style.css" type="text/css">
-				<script src="./amcharts/amcharts.js" type="text/javascript"></script>
-				<script src="./amcharts/radar.js" type="text/javascript"></script>
-				<script src="./radar_data.js" type="text/javascript"></script>
-			</head>
-			
-			<body>''')
+		filehandle.write(open("./html/tpl/header.html").read())
 		for i in maklist:
 			if i["name"] in datalist:
 				filehandle.write("<div>%s<pre>%s</pre></div>"% (i['name'],self.datafream.loc[i['name'],:]))
 				filehandle.write("<div>%s<pre>%s</pre></div>"% (i['name'],do.loc[i['name'],:]))
 				filehandle.write('''<div id="%s" style="width:600px; height:400px;"></div>\n<hr>'''% i['name'])
-		filehandle.write('''
-			</body>
-
-		</html>''')
+		filehandle.write(open("./html/tpl/footer.html").read())
 		filehandle.close()
