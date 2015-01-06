@@ -20,7 +20,8 @@ class Analyzer:
 	globaldatalist=[]	# 用于主成分分析 [[],[],[]] 型
 	datalist=[]   # 币名（list）
 	meandatacol=[] # 评判项
-	meandatacolweight=[]
+	meandatacolweight=[]#归一化权重
+	meandatacolweightOrigin=[]#原始权重用于乘方
 	def __init__(self, arg="config.json"):
 		'''loading data '''
 		self.config=json.load(open(arg))
@@ -43,9 +44,9 @@ class Analyzer:
 		self.meaningcol=self.config["stats_factors"]
 		self.meaningcolinsf=self.config["api_factors"]
 		self.meandatacol=self.meaningcol+self.meaningcolinsf
-		weight=self.config["stats_factors_weight"]+self.config["api_factors_weight"]
-		sumweight=sum(weight)/1.0;
-		self.meandatacolweight=[ i/sumweight for i in weight ]
+		self.meandatacolweightOrigin=self.config["stats_factors_weight"]+self.config["api_factors_weight"]
+		sumweight=sum(self.meandatacolweightOrigin)/1.0;
+		self.meandatacolweight=[ i/sumweight for i in self.meandatacolweightOrigin ]
 		print self.globaldata,"\n\n\n", self.globaldatalist
 
 	def pca(self,data,nRedDim=0,normalise=1):
@@ -129,27 +130,30 @@ class Analyzer:
 				print i['name'] , " : ",dattest[i['name']]
 
 	def summaryradar(self):
-		'''雷达图面积法 贡献角度 todo'''
-
+		
 		#准备角度
 		sita = [ 2 * 3.142 * i for i in  self.meandatacolweight]
 		#准备列
 		sumarray=[]
+		mularray=[]
 		for i in range(0, self.divmax.index.__len__() ):
 			sumarea=0
+			mul=1
 			for j in range(0, self.divmax.columns.__len__()):
 				sumarea+= self.divmax.iloc[i,j] * self.divmax.iloc[i,j-1] * sin(sita[j])
-
+				mul*= (self.divmax.iloc[i,j]+1) ** self.meandatacolweightOrigin[j]
 			sumarray.append(sumarea)
-
-		self.divmax.loc[:,'area']=sumarray
-
+			mularray.append(mul)
+		self.datafream.loc[:,'area']=sumarray
+		self.datafream.loc[:,"mul"]=mularray
+		self.divmax.loc[:,"area"]=[i/float(max(sumarray)) for i in sumarray]
+		self.divmax.loc[:,"mul"]=[i/float(max(mularray)) for i in mularray]
 
 		print "方式2（雷达图面积）：\n"
 		# 输出雷达图面积
 		for i in self.maklist:
 			if i["name"] in self.datalist:
-				print i['name'] , " : ",self.divmax.loc[i['name'],'area']
+				print i['name'] , " : ",self.datafream.loc[i['name'],'area']
 
 		# 输出雷达图 html 图形
 		filehandle = open("./html/radar_data.js","w")
@@ -161,12 +165,12 @@ class Analyzer:
 						theme: "chalk",
 						dataProvider: [\t
 					''' %(i["name"],i["name"]))
-				for j in range(0,self.divmax.columns.__len__()-1):
+				for j in range(0,self.datafream.columns.__len__()-1):
 					filehandle.write('''{
 								"item": "%s",
 								"data": %lf
-						}'''%(self.divmax.columns[j],self.divmax.loc[i['name'],:][j]))
-					if j!= self.divmax.columns.__len__()-2:
+						}'''%(self.datafream.columns[j],self.divmax.loc[i['name'],:][j]))
+					if j!= self.datafream.columns.__len__()-2:
 						filehandle.write(',')
 				filehandle.write(open("./html/tpl/jsconfig.tpl").read())
 		filehandle.close()
@@ -181,22 +185,25 @@ class Analyzer:
 		filehandle.write(open("./html/tpl/footer.html").read())
 		filehandle.close()
 
+		#################
 		# 第二版 table展示
+		#################
 		filehandle=open("./html/table_data.html","w")
 		filehandle.write(open("./html/tpl/header.html").read())
 		filehandle.write('''
 			<style type=\"text/css\">th{width:%s%%;}</style>
-			<table><tbody><tr><th>CoinName</th>'''% int(100/(1+self.meandatacol.__len__())))
+			<table><tbody><tr><th>CoinName</th>'''% int(100/(1+self.datafream.iloc[0,:].__len__())))
 		for i in self.meandatacol:
 			filehandle.write("<th>%s</th>"%i)
 
+		filehandle.write("<th>RadarArea</th><th>Mul</th>")
 		filehandle.write("</tr>")
-
 		for i in self.maklist:
 			if i["name"] in self.datalist:
 				filehandle.write("<tr><th>%s</th>"%i["name"])
 				for j in range(0,self.datafream.loc[i['name'],:].__len__()):
 					filehandle.write("<td style=\"background-color: rgba(255,125,0,%2f);\">%1f</td>"% (self.divmax.loc[i['name'],:][j],self.datafream.loc[i['name'],:][j]))
+					
 				filehandle.write("</tr>")
 
 		filehandle.write("</tbody></table>")
