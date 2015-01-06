@@ -19,6 +19,8 @@ class Analyzer:
 	globaldata=[] # 用于创造dataframe的准备数据 [{},{},{},{}]型
 	globaldatalist=[]	# 用于主成分分析 [[],[],[]] 型
 	datalist=[]   # 币名（list）
+	meandatacol=[] # 评判项
+	meandatacolweight=[]
 	def __init__(self, arg="config.json"):
 		'''loading data '''
 		self.config=json.load(open(arg))
@@ -28,6 +30,7 @@ class Analyzer:
 		self.normalization()
 		self.summarypca()
 		self.summaryradar()
+
 		
 	def reloadfile(self,filename):
 		'''重新加载数据'''
@@ -40,6 +43,10 @@ class Analyzer:
 		self.meaningcol=self.config["stats_factors"]
 		self.meaningcolinsf=self.config["api_factors"]
 		self.meandatacol=self.meaningcol+self.meaningcolinsf
+		weight=self.config["stats_factors_weight"]+self.config["api_factors_weight"]
+		sumweight=sum(weight)/1.0;
+		self.meandatacolweight=[ i/sumweight for i in weight ]
+		print self.globaldata,"\n\n\n", self.globaldatalist
 
 	def pca(self,data,nRedDim=0,normalise=1):
    
@@ -120,17 +127,18 @@ class Analyzer:
 		for i in self.maklist:
 			if i["name"] in dattest:
 				print i['name'] , " : ",dattest[i['name']]
+
 	def summaryradar(self):
 		'''雷达图面积法 贡献角度 todo'''
 
 		#准备角度
-		sita = 2 * 3.142 / self.datalist.__len__()
+		sita = [ 2 * 3.142 * i for i in  self.meandatacolweight]
 		#准备列
 		sumarray=[]
 		for i in range(0, self.divmax.index.__len__() ):
 			sumarea=0
 			for j in range(0, self.divmax.columns.__len__()):
-				sumarea+= self.divmax.iloc[i,j] * self.divmax.iloc[i,j-1] * sin(sita)
+				sumarea+= self.divmax.iloc[i,j] * self.divmax.iloc[i,j-1] * sin(sita[j])
 
 			sumarray.append(sumarea)
 
@@ -150,6 +158,7 @@ class Analyzer:
 			if i["name"] in self.datalist:
 				filehandle.write(''' var %s = AmCharts.makeChart("%s", {
 						type: "radar",
+						theme: "chalk",
 						dataProvider: [\t
 					''' %(i["name"],i["name"]))
 				for j in range(0,self.divmax.columns.__len__()-1):
@@ -168,6 +177,29 @@ class Analyzer:
 				filehandle.write("<div>%s<pre>%s</pre></div>"% (i['name'],self.datafream.loc[i['name'],:]))
 				filehandle.write("<div>%s<pre>%s</pre></div>"% (i['name'],self.divmax.loc[i['name'],:]))
 				filehandle.write('''<div id="%s" style="width:600px; height:400px;"></div>\n<hr>'''% i['name'])
+		
+		filehandle.write(open("./html/tpl/footer.html").read())
+		filehandle.close()
+
+		# 第二版 table展示
+		filehandle=open("./html/table_data.html","w")
+		filehandle.write(open("./html/tpl/header.html").read())
+		filehandle.write('''
+			<style type=\"text/css\">th{width:%s%%;}</style>
+			<table><tbody><tr><th>CoinName</th>'''% int(100/(1+self.meandatacol.__len__())))
+		for i in self.meandatacol:
+			filehandle.write("<th>%s</th>"%i)
+
+		filehandle.write("</tr>")
+
+		for i in self.maklist:
+			if i["name"] in self.datalist:
+				filehandle.write("<tr><th>%s</th>"%i["name"])
+				for j in range(0,self.datafream.loc[i['name'],:].__len__()):
+					filehandle.write("<td style=\"background-color: rgba(255,125,0,%2f);\">%1f</td>"% (self.divmax.loc[i['name'],:][j],self.datafream.loc[i['name'],:][j]))
+				filehandle.write("</tr>")
+
+		filehandle.write("</tbody></table>")
 		filehandle.write(open("./html/tpl/footer.html").read())
 		filehandle.close()
 
