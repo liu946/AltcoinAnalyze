@@ -1,5 +1,5 @@
 makeChart = function(weights){
-    multiplyweight = function (dataProvider, weights) {
+    var multiplyweight = function (dataProvider, weights) {
     var coininfo, coinname, i, _results;
     _results = [];
     for (coinname in dataProvider) {
@@ -17,8 +17,39 @@ makeChart = function(weights){
     }
     return _results;
   }
+    var pipe = function (dataProvider) {
+    var x;
+    x = dataProvider.map(function(coininfo) {
+      var k, s, v;
+      s = (function() {
+        var _results;
+        _results = [];
+        for (k in coininfo) {
+          v = coininfo[k];
+          if (k !== 'coinname') {
+            _results.push(v);
+          }
+        }
+        return _results;
+      })();
+      s = s.reduce(function(x, y) {
+        return x + y;
+      });
+      return {
+        key: s,
+        value: coininfo
+      };
+    });
+    x.sort(function(x, y) {
+      return y.key - x.key;
+    });
+    return x.map(function(x) {
+      return x.value;
+    });
+  }
     var fuck = function (dataProvider, graphs, weights) {
     multiplyweight(dataProvider, weights);
+    dataProvider = pipe(dataProvider);
     return AmCharts.makeChart("chartdiv", {
       type: 'serial',
       theme: 'none',

@@ -18,7 +18,8 @@ fs.readFile 'normalizeddata.json',encoding: 'utf8',(err,data) ->
         color: "#000000"
         valueField: x
     obj = """makeChart = function(weights){
-                multiplyweight = #{multiplyweight.toString()}
+                var multiplyweight = #{multiplyweight.toString()}
+                var pipe = #{pipe.toString()}
                 var fuck = #{makeChart.toString()};
                 fuck(#{JSON.stringify dataProvider,null,'  '},
                 #{JSON.stringify graphs,null,'  '},weights)
@@ -26,6 +27,7 @@ fs.readFile 'normalizeddata.json',encoding: 'utf8',(err,data) ->
     fs.writeFileSync 'ploter.js',obj
 makeChart = (dataProvider,graphs,weights) ->
     multiplyweight dataProvider,weights
+    dataProvider = pipe dataProvider
     AmCharts.makeChart "chartdiv",
         type: 'serial'
         theme: 'none'
@@ -58,5 +60,12 @@ makeChart = (dataProvider,graphs,weights) ->
 multiplyweight = (dataProvider,weights) ->
     for coinname, coininfo of dataProvider
         coininfo[i] = Math.floor(coininfo[i] * weights[i] * 10000) / 10000 for i of coininfo when weights[i]?
-
-    
+pipe = (dataProvider) ->
+    x = dataProvider.map (coininfo) ->
+        s = for k,v of coininfo when k isnt 'coinname'
+            v
+        s = s.reduce (x,y) -> x+y
+        key:s
+        value:coininfo
+    x.sort (x,y) -> y.key-x.key
+    x.map (x) -> x.value
