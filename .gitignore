@@ -3,11 +3,12 @@ altcoins
 cache.json
 altcoinsinfo.json
 stats.json
-*.html
-!wm.html
 .Rhistory
 .RData
 cache/
 stats
 *.pyc
+*.js
+html
+!/html/tpl
 *.json
