@@ -49,6 +49,6 @@ makeChart = (dataProvider,graphs,weights) ->
             ]
 multiplyweight = (dataProvider,weights) ->
     for coinname, coininfo of dataProvider
-        coininfo[i] *= weights[i] for i of coininfo when weights[i]?
+        coininfo[i] = Math.floor(coininfo[i] * weights[i] * 10000) / 10000 for i of coininfo when weights[i]?
 
     

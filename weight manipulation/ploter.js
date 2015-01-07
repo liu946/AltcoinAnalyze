@@ -9,7 +9,7 @@ makeChart = function(weights){
         _results1 = [];
         for (i in coininfo) {
           if (weights[i] != null) {
-            _results1.push(coininfo[i] *= weights[i]);
+            _results1.push(coininfo[i] = Math.floor(coininfo[i] * weights[i] * 10000) / 10000);
           }
         }
         return _results1;
