@@ -1,5 +1,5 @@
 makeChart = function(weights){
-  multiplyweight=function (dataProvider, weights) {
+    multiplyweight = function (dataProvider, weights) {
     var coininfo, coinname, i, _results;
     _results = [];
     for (coinname in dataProvider) {
@@ -17,7 +17,7 @@ makeChart = function(weights){
     }
     return _results;
   }
-  var fuck = function (dataProvider, graphs, weights) {
+    var fuck = function (dataProvider, graphs, weights) {
     multiplyweight(dataProvider, weights);
     return AmCharts.makeChart("chartdiv", {
       type: 'serial',
@@ -56,7 +56,7 @@ makeChart = function(weights){
       }
     });
   };
-  fuck([
+    fuck([
   {
     "ActiveDays": 1,
     "TotalAuthors": 1,
@@ -266,7 +266,8 @@ makeChart = function(weights){
     "forks": 0.4585,
     "coinname": "Zetacoin"
   }
-],[
+],
+    [
   {
     "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
     "fillAlphas": 0.8,

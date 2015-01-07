@@ -6,3 +6,7 @@
 .manipulator {
 	margin-right: 10px;
 }
+
+input {
+	width: 300px;
+}

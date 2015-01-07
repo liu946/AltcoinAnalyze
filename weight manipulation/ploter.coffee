@@ -1,6 +1,8 @@
 fs = require 'fs'
 fs.readFile 'normalizeddata.json',encoding: 'utf8',(err,data) ->
+    return console.log err if err?
     data = JSON.parse data
+    #把名字提取出来作为一个字段，然后把所有币形成一个表。这是为了和amchart适应
     dataProvider = for coinname,coininfo of data
         temp = {}
         temp[k] = v for k,v of coininfo
@@ -15,7 +17,12 @@ fs.readFile 'normalizeddata.json',encoding: 'utf8',(err,data) ->
         type: "column"
         color: "#000000"
         valueField: x
-    obj = "makeChart = function(weights){\n  multiplyweight=#{multiplyweight.toString()}\n  var fuck = #{makeChart.toString()};\n  fuck(#{JSON.stringify dataProvider,null,'  '},#{JSON.stringify graphs,null,'  '},weights)\n}"
+    obj = """makeChart = function(weights){
+                multiplyweight = #{multiplyweight.toString()}
+                var fuck = #{makeChart.toString()};
+                fuck(#{JSON.stringify dataProvider,null,'  '},
+                #{JSON.stringify graphs,null,'  '},weights)
+            }"""
     fs.writeFileSync 'ploter.js',obj
 makeChart = (dataProvider,graphs,weights) ->
     multiplyweight dataProvider,weights
@@ -47,6 +54,7 @@ makeChart = (dataProvider,graphs,weights) ->
             menuItems: [
                 format: 'png'
             ]
+#要修改权值的计算方法只需要改这个小函数即可
 multiplyweight = (dataProvider,weights) ->
     for coinname, coininfo of dataProvider
         coininfo[i] = Math.floor(coininfo[i] * weights[i] * 10000) / 10000 for i of coininfo when weights[i]?

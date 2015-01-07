@@ -9,6 +9,7 @@ var weight = {
 	forks: 1
 };
 window.onload = function(){
+	makeChart(weight);
 	var foo = function(i){
 		var tip = document.getElementById(i+'Tip');
 		tip.textContent = weight[i] = Math.floor(Math.pow(this.value / 50,4)*10000)/10000;

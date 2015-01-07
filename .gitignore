@@ -4,10 +4,10 @@ cache.json
 altcoinsinfo.json
 stats.json
 *.html
+!wm.html
 .Rhistory
 .RData
 cache/
 stats
 *.pyc
-html
 *.json
