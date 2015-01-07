@@ -1,7 +1,13 @@
-运行ploter.coffee文件来获得ploter.js，注意不是编译是运行
+###使用
 
-增删项目需要同时修改wm.js和wm.html两个文件
+```
+$cp ../stats.json ./stats.json
+$rscript normalization.R
+$coffee ploter.coffee
+$firefox wm.html
+```
+###修改
 
-增删币不需要修改，只需使用新的stats.json重新运行ploter.coffee生成新的js文件就行了
-
-运行normalization.R对stats.json进行归一化处理
+* 增删竞争币：不需要修改代码，重复一遍获取ploter.js的流程即可
+* 增删字段：修改wm.js和wm.html两个文件中对应的部分
+* 修改权值计算方法：修改ploter.coffee最后的那两个小函数
