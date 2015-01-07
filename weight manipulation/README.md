@@ -1,0 +1,7 @@
+运行ploter.coffee文件来获得ploter.js，注意不是编译是运行
+
+增删项目需要同时修改wm.js和wm.html两个文件
+
+增删币不需要修改，只需使用新的stats.json重新运行ploter.coffee生成新的js文件就行了
+
+运行normalization.R对stats.json进行归一化处理
