@@ -60,7 +60,7 @@
 			cxt.beginPath();
 			for (var j = 0 ; j < arraylength; j++) {
 				cxt.lineTo(0,size*0.5*0.2*i);
-				cxt.rotate(6.2831853*wei[j%arraylength]);
+				cxt.rotate(6.2831853*wei[j]);
 			};
 			cxt.lineTo(0,size*0.5*0.2*i);
 			cxt.stroke();
@@ -74,9 +74,17 @@
 		};
 		cxt.translate(-size/2,-size/2);
 	}
-	// arr=new Array(0.7,0.5,0.2,0.7,0.6,1);
+	function drawRadar (canvas,size,data,wei,arrlable) {
+		drawRadarxyLable(canvas,size,arrlable,wei);
+		var c=document.getElementById(canvas);
+		var cxt=c.getContext("2d");
+		cxt.translate(size*0.1,size*0.1);
+		drawRadarxy(canvas,size*0.8,data.length,wei);
+		drawRadarData(canvas,size*0.8,data,wei);
+		cxt.translate(-size*0.1,-size*0.1);
+
+	}
+	// data=new Array(0.7,0.5,0.2,0.7,0.6,1);
 	// arrlable=new Array("star","fork","3..","4..","5..","6..");
 	// wei=new Array(0.1,0.1,0.1,0.3,0.2,0.2);
-	// drawRadarxy("myCanvas",500,arr.length,wei);
-	// drawRadarxyLable("myCanvas",500,arrlable,wei);
-	// drawRadarData("myCanvas",500,arr,wei);
+	// drawRadar ("myCanvas",500,data,wei,arrlable) ;
