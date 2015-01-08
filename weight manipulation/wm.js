@@ -13,6 +13,7 @@ window.onload = function(){
 	var foo = function(i){
 		var tip = document.getElementById(i+'Tip');
 		tip.textContent = weight[i] = Math.floor(Math.pow(this.value / 50,4)*10000)/10000;
+		document.getElementById('export').textContent = JSON.stringify(weight,null,"\t");
 		makeChart(weight);
 	};
 	for(var i in weight){
