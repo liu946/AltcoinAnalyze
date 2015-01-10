@@ -1,0 +1,12 @@
+#chartdiv {
+	width: 3000px;
+	height: 800px;
+}
+
+.manipulator {
+	margin-right: 10px;
+}
+
+input {
+	width: 300px;
+}
