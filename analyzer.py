@@ -31,6 +31,7 @@ class Analyzer:
 		self.normalization()
 		self.summarypca()
 		self.summaryradar()
+		self.exportjs()
 
 		
 	def reloadfile(self,filename):
@@ -209,6 +210,17 @@ class Analyzer:
 		filehandle.write("</tbody></table>")
 		filehandle.write(open("./html/tpl/footer.html").read())
 		filehandle.close()
+
+	def exportjs(self):
+		jsfile = open('html/data.js','w')
+		jsfile.write('globaldata = '+json.dumps(self.globaldata)+';')
+		jsfile.write('globaldatalist = '+json.dumps(self.globaldatalist)+';')
+		jsfile.write('datalist = '+json.dumps(self.datalist)+';')
+		jsfile.write('meandatacol = '+json.dumps(self.meandatacol)+';')
+		jsfile.write('meandatacolweight = '+json.dumps(self.meandatacolweight)+';')
+		jsfile.write('meandatacolweightOrigin = '+json.dumps(self.meandatacolweightOrigin)+';')
+		jsfile.close()
+
 
 if __name__ == "__main__":
 	Analyzer()
