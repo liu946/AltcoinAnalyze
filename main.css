@@ -1009,3 +1009,14 @@ font-weight: 300;
 font-size: larger;
 background: rgba(255,244,200,1);
 }
+
+.icon {
+background-image: url(img/icon2.gif);
+background-size: contain;
+height: 60px;
+min-width: 60px;
+}
+.hot_frame{
+	margin-top: 5%;
+}
+}
