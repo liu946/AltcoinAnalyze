@@ -32,6 +32,7 @@ class Analyzer:
 		self.summarypca()
 		self.summaryradar()
 		self.exportjs()
+		self.coinhtml()
 
 		
 	def reloadfile(self,filename):
@@ -213,14 +214,38 @@ class Analyzer:
 
 	def exportjs(self):
 		jsfile = open('html/data.js','w')
-		jsfile.write('globaldata = '+json.dumps(self.globaldata)+';')
-		jsfile.write('globaldatalist = '+json.dumps(self.globaldatalist)+';')
+		#jsfile.write('globaldata = '+json.dumps(self.globaldata)+';')
+		divdata ={}
+		tempdic = self.divmax.T.to_dict()
+		for k,v in zip(tempdic.iterkeys(), tempdic.itervalues()):
+			divdata[k]=v.values()
+
+		jsfile.write('divmax = '+json.dumps(divdata)+';')
+		#jsfile.write('globaldatalist = '+json.dumps(self.globaldatalist)+';')
 		jsfile.write('datalist = '+json.dumps(self.datalist)+';')
 		jsfile.write('meandatacol = '+json.dumps(self.meandatacol)+';')
 		jsfile.write('meandatacolweight = '+json.dumps(self.meandatacolweight)+';')
-		jsfile.write('meandatacolweightOrigin = '+json.dumps(self.meandatacolweightOrigin)+';')
+		#jsfile.write('meandatacolweightOrigin = '+json.dumps(self.meandatacolweightOrigin)+';')
 		jsfile.close()
 
+	def coinhtml(self):
+		coinfile = open('html/radar.html','w');
+		coinfile.write('''<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>coin data with radar graphic </title>
+	<script type="text/javascript" src='data.js'></script>
+</head>
+<body>''')
+		for coin in self.datalist:
+			coinfile.write("	<canvas id='%s' width='500' height='500'></canvas>\n" %coin)
+		
+		coinfile.write('''	<script type="text/javascript" src='radarhtml5.js'></script>
+</body>
+</html>
+		''')
+		coinfile.close()
 
 if __name__ == "__main__":
 	Analyzer()
