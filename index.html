@@ -41,10 +41,10 @@
               </div>
             </div>
     </div>
+    <!-- main section -->
     <div class="main-section">
       <div class="w-container">
-        <div class="pre-heading">
-          Bitcoin? Litecoin?... Which has wonderful code?&nbsp;</div>
+        <div class="pre-heading">Bitcoin? Litecoin?... Which has wonderful code?&nbsp;</div>
           <h1 class="main-heading">
             Altcoin Code Analyzing</h1>
             <p class="main-subtitle">
@@ -54,56 +54,93 @@
               .</span>
             </p>
           </div>
-      </div>
-      <div class="section" id="section1">
-        <div class="w-container">
-          <div class="section-title-wrapper">
-            <div class="section-number">
-              <span class="big-number" style="">
-                #1</span>
-                &nbsp;DIGITAL GRAPHICS
-            </div>
+    </div>
+    <!-- main section end -->
+
+    <!-- section1 hot graphic -->
+    <div class="section" id="section1">
+      <div class="w-container">
+        <div class="section-title-wrapper">
+          <div class="section-number">
+            <span class="big-number" style="">
+              #1</span>
+              &nbsp;DIGITAL GRAPHICS
           </div>
-              <h2>
-                Showing Data
-              </h2>
-                <p class="subtitle">
-                  First, the process download repositories of digital coins. The data come from two places , the repositories (with <a href="https://github.com/Cacauu/GitStatus" target="_blank">
-                  gitstatus</a>
-                  changed) and <a href="https://developer.github.com/v3/" target="_blank">
-                  github API</a>
-                  . Considering the different meaning of items, we present a normaliaztion and try to show it visually.</p>
         </div>
-        <div class="w-container container-style" style='max-width: 90%;'>
-          <p class="plan-description">
-            Every column is an item that may have relationship with&nbsp;the activity of&nbsp;project&nbsp;development. We divide every data num by the maximum of it's item to normalize it. According to this, we can give them an degree to how this item(column) of this coin(row) is, comparing with others. The lager data has a deeper background.</p>
-            <div class="label try-it" style='margin-top: 20px;'>
-              Heat weight chart</div>
-              <div class="hot_frame">
-                <iframe src="table_data.html"style='width: 100%;height: 600px;border: none;'></iframe>
-              </div>
-        </div>
-        <div class="w-container container-style last">
+            <h2>
+              Showing Data
+            </h2>
+              <p class="subtitle">
+                First, the process download repositories of digital coins. The data come from two places , the repositories (with <a href="https://github.com/Cacauu/GitStatus" target="_blank">
+                gitstatus</a>
+                changed) and <a href="https://developer.github.com/v3/" target="_blank">
+                github API</a>
+                . Considering the different meaning of items, we present a normaliaztion and try to show it visually.</p>
+      </div>
+      <div class="w-container container-style" style='max-width: 90%;'>
+        <p class="plan-description">
+          Every column is an item that may have relationship with&nbsp;the activity of&nbsp;project&nbsp;development. We divide every data num by the maximum of it's item to normalize it. According to this, we can give them an degree to how this item(column) of this coin(row) is, comparing with others. The lager data has a deeper background.</p>
+          <div class="label try-it" style='margin-top: 20px;'>
+            Heat weight chart</div>
+            <div class="hot_frame">
+              <iframe src="table_data.html"style='height: 600px'></iframe>
+            </div>
+      </div>
+      <div class="w-container container-style last">
         <p class="plan-description">
         We thought about doing a summary of the all items of one digital coin and give them a weight to present it's contribution to the value of the code.&nbsp;Besides sum the normalized data item, we also calculated the area of the radar graphic (as <strong id='strong-con'>RadarArea</strong> in the GRAPHICS and angle as the weight), and product of all items' power(as <strong id='strong-con'>Mul</strong> in the GRAPHICS and power as the weight).</p>
         <p id="plan-description">The radar graphic and more will show you in the following.</p>
         <div class="label try-it">
-          Summing Items</div>
+          Summing Items
         </div>
       </div>
-        
-        
+    </div>
+    <!-- section1 hot graphic end -->
+
+    <!-- section2 weight summing -->
+    <div class="section" id='section2'>
+      <div class="w-container">
+        <div class="section-title-wrapper">
+          <div class="section-number"><span class="big-number">#2</span>Weight Manipulation</div>
+        </div>
+        <h2>Set Items' Weight</h2>
+        <p class="subtitle">
+          As you see, simply adding the items up, we will get one possible mark for every coin representing it's activity of development.&nbsp;You can grag the progress bar to weight each item and to see the order of thier development activities.&nbsp;This order may have something to do with the value order of the digital coin, and give an reference when browsing the them. 
+        </p>
+      </div>
+      <div class="section-example">
+        <p class="plan-description">
+          Block of one color representing an item as the legend showing on the right. <br>
+          You can see the data once cover the colored blocks. <br>
+          When you drag the progress bar, it automatically calculate the sum of all items of one coin with the weight you set and change the order of them by that summary.You can give the item, which you think more meaningful, a higher mark and get the order of activity.
+        </p>
+        <div class="hot_frame">
+          <iframe src="weight.html"style='height: 1000px'></iframe>
+        </div>
+        <div class="label try-it">
+          Changable Weight
+        </div>
+      </div>
+    </div>
+    <!-- section2 weight summing end -->
+
+
 
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+
 </script>
 
 <script type="text/javascript" src="https://daks2k3a4ib2z.cloudfront.net/54d4f3be44a5e15c6a2118f9/js/webflow.88ecf87b6.js">
+
 </script>
 
 <!--[if lte IE 9]>
 <script src="//cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js">
+
 </script>
 <![endif]-->
 
+
 </body>
+
 </html>

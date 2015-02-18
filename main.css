@@ -1009,7 +1009,17 @@ font-weight: 300;
 font-size: larger;
 background: rgba(255,244,200,1);
 }
-
+a.w-nav-link.navlink:hover {
+color: #FFD95A;
+font-weight: bold;
+}
+.navlink {
+font-family: Tahoma, Verdana, Segoe, sans-serif;
+color: #fcfcfc;
+font-size: 17px;
+font-weight: 400;
+min-width: 120px;
+}
 .icon {
 background-image: url(img/icon2.gif);
 background-size: contain;
@@ -1019,4 +1029,8 @@ min-width: 60px;
 .hot_frame{
 	margin-top: 5%;
 }
+iframe{
+	width: 100%;
+	
+	border: none;
 }
