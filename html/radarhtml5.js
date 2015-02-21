@@ -84,7 +84,13 @@
 		cxt.translate(-size*0.1,-size*0.1);
 
 	}
-	// data=new Array(0.7,0.5,0.2,0.7,0.6,1);
-	// arrlable=new Array("star","fork","3..","4..","5..","6..");
-	// wei=new Array(0.1,0.1,0.1,0.3,0.2,0.2);
-	// drawRadar ("myCanvas",500,data,wei,arrlable) ;
+	window.onload=function (argument) {
+		// data=new Array(0.7,0.5,0.2,0.7,0.6,1);
+		// arrlable=new Array("star","fork","3..","4..","5..","6..");
+		// wei=new Array(0.1,0.1,0.1,0.3,0.2,0.2);
+		// drawRadar ("myCanvas",300,data,wei,arrlable) ;
+		for(var coin in datalist){
+			console.log(datalist[coin]);
+			drawRadar(datalist[coin],500,divmax[datalist[coin]],meandatacolweight,meandatacol);
+		}
+	}
