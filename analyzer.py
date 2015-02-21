@@ -236,15 +236,41 @@ class Analyzer:
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<title>coin data with radar graphic </title>
 	<script type="text/javascript" src='data.js'></script>
+	<link rel="stylesheet" type="text/css" href="main.css">
 </head>
-<body>''')
-		for coin in self.datalist:
-			coinfile.write("	<canvas id='%s' width='500' height='500'></canvas>\n" %coin)
-		
-		coinfile.write('''	<script type="text/javascript" src='radarhtml5.js'></script>
-</body>
-</html>
+<body>
+	<div class="w-row example-wrapper center" >
 		''')
+		for coin,data in zip(self.datalist,self.globaldata):
+			# coinfile.write(json.dumps(data))
+			# coinfile.write("	<canvas id='%s' width='400' height='400'></canvas>\n" %coin)
+			coinfile.write('''			<div class="plan-wrapper" style="display: inline-flex;margin-top:5%;">
+				<div class="plan-info" style="display: inline-block; background: #fff;border-right: 2px solid #eae6f5;width: 60%;">
+					<h2 class="plan-type">
+						'''+coin+'''
+					</h2>
+					<canvas id='''+coin+''' width='500' height='400'></canvas>
+					<p class="plan-description">
+						Perfect for any business with 20 or more employees.&nbsp;
+					</p>
+
+				</div>
+				<ul class="w-list-unstyled feature-list" style="display: inline-table;width:40%">
+					''')
+			for k in data:
+				coinfile.write('<li class="feature-item"><strong>%.0f</strong>&nbsp;&nbsp;&nbsp;%s</li>'%(data[k],k))
+			
+			coinfile.write('''
+
+				</ul>
+
+			</div>''')
+		
+		coinfile.write('''
+	</div>		
+		<script type="text/javascript" src='radarhtml5.js'></script>
+</body>
+</html>''')
 		coinfile.close()
 
 if __name__ == "__main__":

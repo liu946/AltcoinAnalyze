@@ -91,6 +91,6 @@
 		// drawRadar ("myCanvas",300,data,wei,arrlable) ;
 		for(var coin in datalist){
 			console.log(datalist[coin]);
-			drawRadar(datalist[coin],500,divmax[datalist[coin]],meandatacolweight,meandatacol);
+			drawRadar(datalist[coin],400,divmax[datalist[coin]],meandatacolweight,meandatacol);
 		}
 	}
