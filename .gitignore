@@ -9,6 +9,5 @@ cache/
 stats
 *.pyc
 *.js
-html
-!/html/tpl
 *.json
+html
