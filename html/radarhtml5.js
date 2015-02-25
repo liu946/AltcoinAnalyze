@@ -84,6 +84,18 @@
 		cxt.translate(-size*0.1,-size*0.1);
 
 	}
+	function calArea (data,weight) {
+		var area=0;
+		for (var i =0; i<weight.length ; i++) {
+			console.log(i+' '+weight[i]);
+			area+=data[i] * data[(i+1)%weight.length] * Math.sin(6.2831853*weight[i]);
+		};
+		return area;
+	}
+	function showArea (coinname,data,weight) {
+		var p = document.getElementById(coinname+'area');
+		p.innerHTML=coinname + ' has area ' + calArea(data,weight);
+	}
 	window.onload=function (argument) {
 		// data=new Array(0.7,0.5,0.2,0.7,0.6,1);
 		// arrlable=new Array("star","fork","3..","4..","5..","6..");
@@ -92,5 +104,6 @@
 		for(var coin in datalist){
 			console.log(datalist[coin]);
 			drawRadar(datalist[coin],400,divmax[datalist[coin]],meandatacolweight,meandatacol);
+			showArea(datalist[coin],divmax[datalist[coin]],meandatacolweight);
 		}
 	}
