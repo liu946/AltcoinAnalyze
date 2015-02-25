@@ -84,26 +84,70 @@
 		cxt.translate(-size*0.1,-size*0.1);
 
 	}
-	function calArea (data,weight) {
+	function _calArea (data,weight) {
 		var area=0;
 		for (var i =0; i<weight.length ; i++) {
-			console.log(i+' '+weight[i]);
+			//console.log(i+' '+weight[i]);
 			area+=data[i] * data[(i+1)%weight.length] * Math.sin(6.2831853*weight[i]);
 		};
 		return area;
 	}
 	function showArea (coinname,data,weight) {
 		var p = document.getElementById(coinname+'area');
-		p.innerHTML=coinname + ' has area ' + calArea(data,weight);
+		p.innerHTML=coinname + ' has area ' + Math.floor(_calArea(data,weight)*100000)/100000;
 	}
-	window.onload=function (argument) {
+	function loadpage(weight) {
 		// data=new Array(0.7,0.5,0.2,0.7,0.6,1);
 		// arrlable=new Array("star","fork","3..","4..","5..","6..");
 		// wei=new Array(0.1,0.1,0.1,0.3,0.2,0.2);
 		// drawRadar ("myCanvas",300,data,wei,arrlable) ;
 		for(var coin in datalist){
-			console.log(datalist[coin]);
-			drawRadar(datalist[coin],400,divmax[datalist[coin]],meandatacolweight,meandatacol);
-			showArea(datalist[coin],divmax[datalist[coin]],meandatacolweight);
+			//console.log(datalist[coin]);
+			drawRadar(datalist[coin],400,divmax[datalist[coin]],weight,meandatacol);
+			showArea(datalist[coin],divmax[datalist[coin]],weight);
 		}
 	}
+	function weightSetForm () {
+		var table = document.getElementById('weightset');
+		var str='<tr>';
+		for (var i=0;i<meandatacolweight.length;i++) {
+			str+='<td>'+meandatacol[i]+'</td>'+
+			'<td><input id= "weight'+i+'" for="'+meandatacol[i]+'" type="range" /></td>'+
+			'<td id="weightnum'+i+'">'+meandatacolweight[i]+'<td>';
+			if((i%2))str+='</tr><tr>'
+		};
+		str+='</tr>';
+		table.innerHTML=str;
+		for (var i=0;i<meandatacolweight.length;i++) {
+			var range = document.getElementById('weight'+i);
+			range.value=meandatacolweight[i]*100;
+			//绑定函数
+			range.onchange=resetweight;
+		};
+	}
+	function resetweight () {
+		var sum=0.0;
+		for (var i=0;i<meandatacolweight.length;i++) {
+			var range = document.getElementById('weight'+i);
+			sum+=eval(range.value);
+		}
+		for (var i=0;i<meandatacolweight.length;i++) {
+			var td = document.getElementById('weightnum'+i);
+			var range = document.getElementById('weight'+i);
+			td.innerHTML=Math.floor(range.value/sum*1000)/1000;
+			meandatacolweight[i]=range.value/sum;
+		}
+	}
+
+	window.onload=function (argument) {
+		//加载权重填充
+		weightSetForm()
+		//初始化数据
+		loadpage(meandatacolweight);
+
+
+	}
+
+
+
+
