@@ -75,9 +75,12 @@
 		cxt.translate(-size/2,-size/2);
 	}
 	function drawRadar (canvas,size,data,wei,arrlable) {
-		drawRadarxyLable(canvas,size,arrlable,wei);
+
 		var c=document.getElementById(canvas);
 		var cxt=c.getContext("2d");
+		cxt.clearRect(0,0,size*2,size*2);
+		drawRadarxyLable(canvas,size,arrlable,wei);
+
 		cxt.translate(size*0.1,size*0.1);
 		drawRadarxy(canvas,size*0.8,data.length,wei);
 		drawRadarData(canvas,size*0.8,data,wei);
@@ -103,6 +106,7 @@
 		// drawRadar ("myCanvas",300,data,wei,arrlable) ;
 		for(var coin in datalist){
 			//console.log(datalist[coin]);
+			//clearcanvas(datalist[coin],500);
 			drawRadar(datalist[coin],400,divmax[datalist[coin]],weight,meandatacol);
 			showArea(datalist[coin],divmax[datalist[coin]],weight);
 		}
@@ -136,7 +140,9 @@
 			var range = document.getElementById('weight'+i);
 			td.innerHTML=Math.floor(range.value/sum*1000)/1000;
 			meandatacolweight[i]=range.value/sum;
+			
 		}
+
 	}
 
 	window.onload=function (argument) {
