@@ -1021,7 +1021,7 @@ font-weight: 400;
 min-width: 120px;
 }
 .icon {
-background-image: url(img/icon2.gif);
+background-image: url(../img/icon2.gif);
 background-size: contain;
 height: 60px;
 min-width: 60px;
