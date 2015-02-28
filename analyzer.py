@@ -14,7 +14,7 @@ import pandas as pd
 from numpy import *
 from pylab import * # 此处引入pylab出错，暂时注释
 from math import *
-class Analyzer:
+class Analyzer():
 	"""docstring for Analyzer"""
 	globaldata=[] # 用于创造dataframe的准备数据 [{},{},{},{}]型
 	globaldatalist=[]	# 用于主成分分析 [[],[],[]] 型
@@ -23,16 +23,13 @@ class Analyzer:
 	meandatacolweight=[]#归一化权重
 	meandatacolweightOrigin=[]#原始权重用于乘方
 	def __init__(self, arg="config.json"):
-		'''loading data '''
+		'''loading data'''
 		self.config=json.load(open(arg))
 		self.maklist= json.load(open("altcoinsinfo.json")) 
 		self.reloadfile("stats.json")
 		self.refreshdatalist()
 		self.normalization()
-		self.summarypca()
-		self.summaryradar()
-		self.exportjs()
-		self.coinhtml()
+
 
 		
 	def reloadfile(self,filename):
@@ -52,7 +49,10 @@ class Analyzer:
 		print self.globaldata,"\n\n\n", self.globaldatalist
 
 	def pca(self,data,nRedDim=0,normalise=1):
-   
+   		'''
+   		数据标准化
+		
+   		'''
 	    # 数据标准化
 	    m = mean(data,axis=0)# mean axis=0 可以计算每一列的平均值
 	    data -= m
@@ -81,6 +81,7 @@ class Analyzer:
 	    return x,y,revals,evecs
 
 	def refreshdatalist(self):
+		'''刷新列表'''
 		for xcoin in self.coindata:
 			_data={} #生成globaldata中的子{}
 			_datalist=[] #生成 globaldatalist 中的子 []
@@ -101,6 +102,9 @@ class Analyzer:
 		self.datafream=pd.DataFrame(self.globaldata,index=self.datalist)
 
 	def normalization(self):
+		'''
+		数据归一化，初始化两个属性stdscore,divmax
+		'''
 		##############
 		#归一化整理
 		#方法1，标准分
@@ -110,6 +114,10 @@ class Analyzer:
 		self.divmax = self.datafream / self.datafream.describe().loc['max',:]
 
 	def summarypca(self):
+		'''	
+		主成分分析，调用pca函数，一维化数据。
+		在一期展示中并未使用。	
+		'''
 		##############
 		#主成分分析
 		x,y,evals,evecs = self.pca(self.globaldatalist,1)
@@ -132,7 +140,7 @@ class Analyzer:
 				print i['name'] , " : ",dattest[i['name']]
 
 	def summaryradar(self):
-		
+		'''生成雷达图数据html，没有权重角度，利用amchart画成。新版见function coinhtml'''
 		#准备角度
 		sita = [ 2 * 3.142 * i for i in  self.meandatacolweight]
 		#准备列
@@ -190,7 +198,7 @@ class Analyzer:
 		#################
 		# 第二版 table展示
 		#################
-		filehandle=open("./html/table_data.html","w")
+		filehandle=open("./html/table/table_data.html","w")
 		filehandle.write(open("./html/tpl/header.html").read())
 		filehandle.write('''
 			<style type=\"text/css\">th{width:%s%%;}</style>
@@ -213,6 +221,8 @@ class Analyzer:
 		filehandle.close()
 
 	def exportjs(self):
+		'''生成data.js数据文件，用于动态权重数据生成'''
+
 		jsfile = open('html/data.js','w')
 		#jsfile.write('globaldata = '+json.dumps(self.globaldata)+';')
 		divdata ={}
@@ -229,7 +239,8 @@ class Analyzer:
 		jsfile.close()
 
 	def coinhtml(self):
-		coinfile = open('html/radar.html','w');
+		'''生成radar.html文件，动态权重展示'''
+		coinfile = open('html/radar/radar.html','w');
 		coinfile.write(open('html/tpl/radarheader.html').read())
 		for coin,data in zip(self.datalist,self.globaldata):
 			# coinfile.write(json.dumps(data))
@@ -240,9 +251,16 @@ class Analyzer:
 		
 			coinfile.write(open('html/tpl/radarcontent.html').read().format(coin=coin,itemlist=itemlist))
 
-		
 		coinfile.write(open('html/tpl/radarfooter.html').read())
 		coinfile.close()
 
 if __name__ == "__main__":
-	Analyzer()
+	AnalyzerObj = Analyzer()
+	# 在一期展示中没有使用的方法
+	# AnalyzerObj.summarypca()
+	# AnalyzerObj.summaryradar()
+	AnalyzerObj.exportjs()
+	AnalyzerObj.coinhtml()
+
+
+

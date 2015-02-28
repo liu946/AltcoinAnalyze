@@ -1,4 +1,6 @@
 #-*- coding:utf-8 -*-
+# 数据标准化函数，已转入analyzer类中
+
 from pylab import *
 from numpy import *
 def pca(data,nRedDim=0,normalise=1):

@@ -1,0 +1,22 @@
+#chartdiv {
+	width: 2000px;
+	height: 800px;
+}
+
+.manipulator {
+	margin-right: 10px;
+}
+
+input {
+	width: 300px;
+}
+
+[left] {
+	float: left;
+}
+
+#export {
+	width: 300px;
+	height: 180px;
+	margin-left: 20px;
+}

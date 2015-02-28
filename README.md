@@ -5,6 +5,12 @@ Judge altcoin's value by
 - analyze its development activity frequency
 - how its source codes are similar to others
 
+### Showing Page Url
+
+You can check the demo page by checking the following URL.
+
+http://liu946.github.io/AltcoinAnalyze/
+
 ### How we design
 1. Download all to be analyzed altcoins' repos and use gitstats to get those info
 2. Analyze ...

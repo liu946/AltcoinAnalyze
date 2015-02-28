@@ -1,6 +1,9 @@
 # -*- coding: UTF-8 -*-
 
 from downloader import Downloader
+
+from analyzer import Analyzer
+import webbrowser
 # import analyzer.py
 # import visualizer.py
 import os
@@ -25,11 +28,16 @@ while True:
 	
 	# Analyze
 	# -----------------
+	A = Analyzer()
 	
 	# Visualize
 	# -----------------
-	
+	A.exportjs()
+	A.coinhtml()
+
 	if not sync:
+
+		webbrowser.open('./html/main.html', new=0, autoraise=True)
 		exit(0)
 
 	time.sleep(sync_rate)

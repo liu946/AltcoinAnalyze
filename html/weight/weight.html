@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+	<head>
+		<title>Weight Manipulation</title>
+		<link rel="stylesheet" type="text/css" href="wm.css">
+		<script type="text/javascript" src="amcharts/amcharts.js"></script>
+		<script type="text/javascript" src="amcharts/serial.js"></script>
+		<script type="text/javascript" src="ploter.js"></script>
+		<script type="text/javascript" src="wm.js"></script>
+	</head>
+	<body>
+		<div id="chartdiv" style='width: 100%'></div>
+		<div left>
+			<table>
+			<div class="manipulator">
+				<tr>
+					<th><label for="ActiveDays">ActiveDays</label></th>
+					<td><input id= "ActiveDays" type="range" /></td>
+					<td><span id="ActiveDaysTip">1</span></td>
+				</tr>
+			</div>
+			<div class="manipulator">
+				<tr>
+					<th><label for="TotalAuthors">TotalAuthors</label></th>
+					<td><input id= "TotalAuthors" type="range" /></td>
+					<td><span id="TotalAuthorsTip">1</span></td>
+				</tr>
+			</div>
+			<div class="manipulator">
+				<tr>
+					<th><label for="TotalCommits">TotalCommits</label></th>
+					<td><input id= "TotalCommits" type="range" /></td>
+					<td><span id="TotalCommitsTip">1</span></td>
+				</tr>
+			</div>
+			<div class="manipulator">
+				<tr>
+					<th><label for="open_issues_count">open_issues_count</label></th>
+					<td><input id= "open_issues_count" type="range" /></td>
+					<td><span id="open_issues_countTip">1</span></td>
+				</tr>
+			</div>
+			<div class="manipulator">
+				<tr>
+					<th><label for="ActiveDaysPercentage">ActiveDaysPercentage</label></th>
+					<td><input id= "ActiveDaysPercentage" type="range" /></td>
+					<td><span id="ActiveDaysPercentageTip">1</span></td>
+				</tr>
+			</div>
+			<div class="manipulator">
+				<tr>
+					<th><label for="watchers_count">watchers_count</label></th>
+					<td><input id= "watchers_count" type="range" /></td>
+					<td><span id="watchers_countTip">1</span></td>
+				</tr>
+			</div>
+			<div class="manipulator">
+				<tr>
+					<th><label for="stargazers_count">stargazers_count</label></th>
+					<td><input id= "stargazers_count" type="range" /></td>
+					<td><span id="stargazers_countTip">1</span></td>
+				</tr>
+			</div>
+			<div class="manipulator">
+				<tr>
+					<th><label for="forks">forks</label></th>
+					<td><input id= "forks" type="range" /></td>
+					<td><span id="forksTip">1</span></td>
+				</tr>
+			</div>
+			</table>
+		</div>
+		<div left>
+			<textarea id="export"></textarea>
+		</div>
+	</body>
+</html>
