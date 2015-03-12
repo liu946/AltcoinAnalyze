@@ -20,13 +20,6 @@
             "https://github.com/ripple/ripple-client.git": 1
         }
     },
-    "BitSharesX": {
-        "website": "http://bitshares-x.info/",
-        "logo": "http://bitshares-x.info/img/btsx-logo-w.svg",
-        "repo_url": {
-            "https://github.com/dacsunlimited/bitsharesx.git": 1
-        }
-    },
     "Dogecoin": {
         "website": "http://dogecoin.com/",
         "logo": "http://dogecoin.com/imgs/dogecoin-300.png",
@@ -60,13 +53,6 @@
         "logo": "http://www.monero.cc/wordpress/wp-content/uploads/2014/04/logo3.jpg",
         "repo_url": {
             "https://github.com/monero-project/bitmonero.git": 1
-        }
-    },
-    "Counterparty": {
-        "website": "https://www.counterparty.co/",
-        "logo": "https://www.counterparty.co/wp-content/themes/counterparty/images/logo.png",
-        "repo_url": {
-            "https://github.com/CounterpartyXCP/Counterparty.git": 1
         }
     },
     "BitcoinDark": {
