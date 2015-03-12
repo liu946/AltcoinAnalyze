@@ -4,7 +4,7 @@
   	"gitstats_dir": "./stats/",
    	"stats_factors": ["TotalCommits","ActiveDays","ActiveDaysPercentage","TotalAuthors"],
    	"stats_factors_weight":[1,2,3,4],
-    "api_factors": ["stargazers_count","watchers_count","forks","open_issues_count"],
+    "api_factors": ["stargazers_count","subscribers_count","forks","open_issues_count"],
     "api_factors_weight":[1,2,3,4],
     "sync": false, 
     "sync_rate": 86400
