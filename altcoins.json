@@ -117,5 +117,96 @@
         "repo_url": {
             "https://github.com/zetacoin/zetacoin.git": 1
         }
+    },
+    "DNotes": {
+        "website": "",
+        "logo": "",
+        "repo_url": {
+            "https://github.com/DNotesCoin/DNotes.git": 1
+        }
+    },
+    "Clams": {
+        "website": "",
+        "logo": "",
+        "repo_url": {
+            "https://github.com/nochowderforyou/clams.git": 1
+        }
+    },
+    "MaidSafeCoin": {
+        "website": "",
+        "logo": "",
+        "repo_url": {
+            "https://github.com/maidsafe/MaidSafe.git": 1
+        }
+    },
+    "DarkNote": {
+        "website": "",
+        "logo": "",
+        "repo_url": {
+            "https://github.com/ducknote/darknote.git": 1
+        }
+    },
+    "Counterparty": {
+        "website": "",
+        "logo": "",
+        "repo_url": {
+            "https://github.com/CounterpartyXCP/counterpartyd.git": 1
+        }
+    },
+    "MonaCoin": {
+        "website": "",
+        "logo": "",
+        "repo_url": {
+            "https://github.com/monacoinproject/monacoin.git": 1
+        }
+    },
+    "Ethercoin": {
+        "website": "",
+        "logo": "",
+        "repo_url": {
+            "https://github.com/ethercoin/ethercoin.git": 1
+        }
+    },
+    "FuelCoin": {
+        "website": "",
+        "logo": "",
+        "repo_url": {
+            "https://github.com/FuelCoinDev/FC2-Source.git": 1
+        }
+    },
+    "DigiByte": {
+        "website": "",
+        "logo": "",
+        "repo_url": {
+            "https://github.com/digibyte/digibyte.git": 1
+        }
+    },
+    "Unobtanium": {
+        "website": "",
+        "logo": "",
+        "repo_url": {
+            "https://github.com/unobtanium-official/Unobtanium.git": 1
+        }
+    },
+    "Novacoin": {
+        "website": "",
+        "logo": "",
+        "repo_url": {
+            "https://github.com/CryptoManiac/novacoin.git": 1
+        }
+    },
+    "ReddCoin": {
+        "website": "",
+        "logo": "",
+        "repo_url": {
+            "https://github.com/reddcoin-project/reddcoin.git": 1
+        }
+    },
+    "Mintcoin": {
+        "website": "",
+        "logo": "",
+        "repo_url": {
+            "https://github.com/MintcoinCommunity/mintcoin.git": 1
+        }
     }
 }
