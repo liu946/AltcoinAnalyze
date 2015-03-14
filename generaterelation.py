@@ -29,3 +29,6 @@ for i in range(len(r)):
 filehandle.write("</tbody></table>")
 filehandle.write(open("./html/tpl/footer.html").read())
 filehandle.close()
+
+
+ 		
