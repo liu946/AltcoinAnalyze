@@ -77,14 +77,17 @@
 	function drawRadar (canvas,size,data,wei,arrlable) {
 
 		var c=document.getElementById(canvas);
-		var cxt=c.getContext("2d");
-		cxt.clearRect(0,0,size*2,size*2);
-		drawRadarxyLable(canvas,size,arrlable,wei);
+		if(c!=null){
+			var cxt=c.getContext("2d");
+			cxt.clearRect(0,0,size*2,size*2);
+			drawRadarxyLable(canvas,size,arrlable,wei);
 
-		cxt.translate(size*0.1,size*0.1);
-		drawRadarxy(canvas,size*0.8,data.length,wei);
-		drawRadarData(canvas,size*0.8,data,wei);
-		cxt.translate(-size*0.1,-size*0.1);
+			cxt.translate(size*0.1,size*0.1);
+			drawRadarxy(canvas,size*0.8,data.length,wei);
+			drawRadarData(canvas,size*0.8,data,wei);
+			cxt.translate(-size*0.1,-size*0.1);			
+		}
+
 
 	}
 	function _calArea (data,weight) {
@@ -97,7 +100,10 @@
 	}
 	function showArea (coinname,data,weight) {
 		var p = document.getElementById(coinname+'area');
-		p.innerHTML=coinname + ' has area ' + Math.floor(_calArea(data,weight)*100000)/100000;
+		if (p!=null) {
+			p.innerHTML=coinname + ' has area ' + Math.floor(_calArea(data,weight)*100000)/100000;
+		
+		};
 	}
 	function loadpage(weight) {
 		// data=new Array(0.7,0.5,0.2,0.7,0.6,1);
