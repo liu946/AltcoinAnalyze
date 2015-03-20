@@ -1,0 +1,580 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>amCharts examples</title>
+		<link rel="stylesheet" href="style.css" type="text/css">
+		<script src="./amcharts/amcharts.js" type="text/javascript"></script>
+		<script src="./amcharts/radar.js" type="text/javascript"></script>
+		<script src="./radar_data.js" type="text/javascript"></script>
+	</head>
+	
+	<body><div>Bitcoin<pre>ActiveDays                1476.000000
+ActiveDaysPercentage        72.852912
+TotalAuthors               348.000000
+TotalCommits              8050.000000
+network_count             4650.000000
+open_issues_count          456.000000
+stargazers_count          6631.000000
+subscribers_count          864.000000
+area                         4.690398
+mul                     525460.518732
+Name: Bitcoin, dtype: float64</pre></div><div>Bitcoin<pre>ActiveDays              1.000000
+ActiveDaysPercentage    0.728529
+TotalAuthors            1.000000
+TotalCommits            0.936700
+network_count           1.000000
+open_issues_count       1.000000
+stargazers_count        1.000000
+subscribers_count       0.869215
+area                    1.000000
+mul                     1.000000
+Name: Bitcoin, dtype: float64</pre></div><div id="Bitcoin" style="width:600px; height:400px;"></div>
+<hr><div>Ripple<pre>ActiveDays               672.000000
+ActiveDaysPercentage      66.272189
+TotalAuthors              64.000000
+TotalCommits            4949.000000
+network_count            472.000000
+open_issues_count         23.000000
+stargazers_count        1278.000000
+subscribers_count        994.000000
+area                       0.729667
+mul                     1358.609888
+Name: Ripple, dtype: float64</pre></div><div>Ripple<pre>ActiveDays              0.455285
+ActiveDaysPercentage    0.662722
+TotalAuthors            0.183908
+TotalCommits            0.575867
+network_count           0.101505
+open_issues_count       0.050439
+stargazers_count        0.192731
+subscribers_count       1.000000
+area                    0.155566
+mul                     0.002586
+Name: Ripple, dtype: float64</pre></div><div id="Ripple" style="width:600px; height:400px;"></div>
+<hr><div>Litecoin<pre>ActiveDays               997.000000
+ActiveDaysPercentage      50.815494
+TotalAuthors             199.000000
+TotalCommits            5967.000000
+network_count           4650.000000
+open_issues_count         12.000000
+stargazers_count         989.000000
+subscribers_count        241.000000
+area                       1.132750
+mul                      929.136412
+Name: Litecoin, dtype: float64</pre></div><div>Litecoin<pre>ActiveDays              0.675474
+ActiveDaysPercentage    0.508155
+TotalAuthors            0.571839
+TotalCommits            0.694322
+network_count           1.000000
+open_issues_count       0.026316
+stargazers_count        0.149148
+subscribers_count       0.242455
+area                    0.241504
+mul                     0.001768
+Name: Litecoin, dtype: float64</pre></div><div id="Litecoin" style="width:600px; height:400px;"></div>
+<hr><div>Darkcoin<pre>ActiveDays              1299.000000
+ActiveDaysPercentage      64.626866
+TotalAuthors             281.000000
+TotalCommits            7033.000000
+network_count           4650.000000
+open_issues_count         16.000000
+stargazers_count         154.000000
+subscribers_count         68.000000
+area                       1.679387
+mul                      983.926402
+Name: Darkcoin, dtype: float64</pre></div><div>Darkcoin<pre>ActiveDays              0.880081
+ActiveDaysPercentage    0.646269
+TotalAuthors            0.807471
+TotalCommits            0.818362
+network_count           1.000000
+open_issues_count       0.035088
+stargazers_count        0.023224
+subscribers_count       0.068410
+area                    0.358048
+mul                     0.001873
+Name: Darkcoin, dtype: float64</pre></div><div id="Darkcoin" style="width:600px; height:400px;"></div>
+<hr><div>Dogecoin<pre>ActiveDays              1287.000000
+ActiveDaysPercentage      65.429588
+TotalAuthors             293.000000
+TotalCommits            6290.000000
+network_count            484.000000
+open_issues_count         81.000000
+stargazers_count        1062.000000
+subscribers_count        157.000000
+area                       1.491250
+mul                     1238.175418
+Name: Dogecoin, dtype: float64</pre></div><div>Dogecoin<pre>ActiveDays              0.871951
+ActiveDaysPercentage    0.654296
+TotalAuthors            0.841954
+TotalCommits            0.731906
+network_count           0.104086
+open_issues_count       0.177632
+stargazers_count        0.160157
+subscribers_count       0.157948
+area                    0.317937
+mul                     0.002356
+Name: Dogecoin, dtype: float64</pre></div><div id="Dogecoin" style="width:600px; height:400px;"></div>
+<hr><div>MaidSafeCoin<pre>ActiveDays               555.000000
+ActiveDaysPercentage      52.907531
+TotalAuthors              42.000000
+TotalCommits            1773.000000
+network_count             93.000000
+open_issues_count         12.000000
+stargazers_count         504.000000
+subscribers_count        134.000000
+area                       0.220907
+mul                       21.284640
+Name: MaidSafeCoin, dtype: float64</pre></div><div>MaidSafeCoin<pre>ActiveDays              0.376016
+ActiveDaysPercentage    0.529075
+TotalAuthors            0.120690
+TotalCommits            0.206307
+network_count           0.020000
+open_issues_count       0.026316
+stargazers_count        0.076007
+subscribers_count       0.134809
+area                    0.047098
+mul                     0.000041
+Name: MaidSafeCoin, dtype: float64</pre></div><div id="MaidSafeCoin" style="width:600px; height:400px;"></div>
+<hr><div>Stellar<pre>ActiveDays               916.000000
+ActiveDaysPercentage      74.050121
+TotalAuthors              63.000000
+TotalCommits            8594.000000
+network_count             48.000000
+open_issues_count         68.000000
+stargazers_count         277.000000
+subscribers_count         67.000000
+area                       0.575536
+mul                      253.372831
+Name: Stellar, dtype: float64</pre></div><div>Stellar<pre>ActiveDays              0.620596
+ActiveDaysPercentage    0.740501
+TotalAuthors            0.181034
+TotalCommits            1.000000
+network_count           0.010323
+open_issues_count       0.149123
+stargazers_count        0.041773
+subscribers_count       0.067404
+area                    0.122705
+mul                     0.000482
+Name: Stellar, dtype: float64</pre></div><div id="Stellar" style="width:600px; height:400px;"></div>
+<hr><div>Peercoin<pre>ActiveDays               670.000000
+ActiveDaysPercentage      39.044289
+TotalAuthors             129.000000
+TotalCommits            3039.000000
+network_count           4650.000000
+open_issues_count         55.000000
+stargazers_count         223.000000
+subscribers_count         63.000000
+area                       0.540354
+mul                       86.187509
+Name: Peercoin, dtype: float64</pre></div><div>Peercoin<pre>ActiveDays              0.453930
+ActiveDaysPercentage    0.390443
+TotalAuthors            0.370690
+TotalCommits            0.353619
+network_count           1.000000
+open_issues_count       0.120614
+stargazers_count        0.033630
+subscribers_count       0.063380
+area                    0.115204
+mul                     0.000164
+Name: Peercoin, dtype: float64</pre></div><div id="Peercoin" style="width:600px; height:400px;"></div>
+<hr><div>Monero<pre>ActiveDays              143.000000
+ActiveDaysPercentage     29.729730
+TotalAuthors             34.000000
+TotalCommits            653.000000
+network_count            69.000000
+open_issues_count        47.000000
+stargazers_count         55.000000
+subscribers_count        31.000000
+area                      0.050613
+mul                       4.684133
+Name: Monero, dtype: float64</pre></div><div>Monero<pre>ActiveDays              0.096883
+ActiveDaysPercentage    0.297297
+TotalAuthors            0.097701
+TotalCommits            0.075983
+network_count           0.014839
+open_issues_count       0.103070
+stargazers_count        0.008294
+subscribers_count       0.031187
+area                    0.010791
+mul                     0.000009
+Name: Monero, dtype: float64</pre></div><div id="Monero" style="width:600px; height:400px;"></div>
+<hr><div>Namecoin<pre>ActiveDays               372.000000
+ActiveDaysPercentage      24.000000
+TotalAuthors              82.000000
+TotalCommits            1014.000000
+network_count            121.000000
+open_issues_count          6.000000
+stargazers_count          77.000000
+subscribers_count         15.000000
+area                       0.110372
+mul                        6.568242
+Name: Namecoin, dtype: float64</pre></div><div>Namecoin<pre>ActiveDays              0.252033
+ActiveDaysPercentage    0.240000
+TotalAuthors            0.235632
+TotalCommits            0.117989
+network_count           0.026022
+open_issues_count       0.013158
+stargazers_count        0.011612
+subscribers_count       0.015091
+area                    0.023531
+mul                     0.000012
+Name: Namecoin, dtype: float64</pre></div><div id="Namecoin" style="width:600px; height:400px;"></div>
+<hr><div>Counterparty<pre>ActiveDays               367.000000
+ActiveDaysPercentage      87.799043
+TotalAuthors              27.000000
+TotalCommits            2441.000000
+network_count             97.000000
+open_issues_count         37.000000
+stargazers_count         151.000000
+subscribers_count         43.000000
+area                       0.212990
+mul                       22.653011
+Name: Counterparty, dtype: float64</pre></div><div>Counterparty<pre>ActiveDays              0.248645
+ActiveDaysPercentage    0.877990
+TotalAuthors            0.077586
+TotalCommits            0.284035
+network_count           0.020860
+open_issues_count       0.081140
+stargazers_count        0.022772
+subscribers_count       0.043260
+area                    0.045410
+mul                     0.000043
+Name: Counterparty, dtype: float64</pre></div><div id="Counterparty" style="width:600px; height:400px;"></div>
+<hr><div>MonaCoin<pre>ActiveDays              24.000000
+ActiveDaysPercentage     5.454545
+TotalAuthors             6.000000
+TotalCommits            95.000000
+network_count           18.000000
+open_issues_count        0.000000
+stargazers_count        41.000000
+subscribers_count       20.000000
+area                     0.001696
+mul                      1.376641
+Name: MonaCoin, dtype: float64</pre></div><div>MonaCoin<pre>ActiveDays              0.016260
+ActiveDaysPercentage    0.054545
+TotalAuthors            0.017241
+TotalCommits            0.011054
+network_count           0.003871
+open_issues_count       0.000000
+stargazers_count        0.006183
+subscribers_count       0.020121
+area                    0.000362
+mul                     0.000003
+Name: MonaCoin, dtype: float64</pre></div><div id="MonaCoin" style="width:600px; height:400px;"></div>
+<hr><div>Bytecoin<pre>ActiveDays               31.000000
+ActiveDaysPercentage     10.163934
+TotalAuthors             10.000000
+TotalCommits             58.000000
+network_count           220.000000
+open_issues_count         5.000000
+stargazers_count         48.000000
+subscribers_count        36.000000
+area                      0.004755
+mul                       1.747634
+Name: Bytecoin, dtype: float64</pre></div><div>Bytecoin<pre>ActiveDays              0.021003
+ActiveDaysPercentage    0.101639
+TotalAuthors            0.028736
+TotalCommits            0.006749
+network_count           0.047312
+open_issues_count       0.010965
+stargazers_count        0.007239
+subscribers_count       0.036217
+area                    0.001014
+mul                     0.000003
+Name: Bytecoin, dtype: float64</pre></div><div id="Bytecoin" style="width:600px; height:400px;"></div>
+<hr><div>DNotes<pre>ActiveDays               2.000000
+ActiveDaysPercentage    20.000000
+TotalAuthors             1.000000
+TotalCommits             2.000000
+network_count            0.000000
+open_issues_count        0.000000
+stargazers_count         0.000000
+subscribers_count        2.000000
+area                     0.000626
+mul                      1.467524
+Name: DNotes, dtype: float64</pre></div><div>DNotes<pre>ActiveDays              0.001355
+ActiveDaysPercentage    0.200000
+TotalAuthors            0.002874
+TotalCommits            0.000233
+network_count           0.000000
+open_issues_count       0.000000
+stargazers_count        0.000000
+subscribers_count       0.002012
+area                    0.000133
+mul                     0.000003
+Name: DNotes, dtype: float64</pre></div><div id="DNotes" style="width:600px; height:400px;"></div>
+<hr><div>DarkNote<pre>ActiveDays               41.000000
+ActiveDaysPercentage      9.647059
+TotalAuthors             10.000000
+TotalCommits            126.000000
+network_count           220.000000
+open_issues_count         0.000000
+stargazers_count          3.000000
+subscribers_count         5.000000
+area                      0.004479
+mul                       1.525706
+Name: DarkNote, dtype: float64</pre></div><div>DarkNote<pre>ActiveDays              0.027778
+ActiveDaysPercentage    0.096471
+TotalAuthors            0.028736
+TotalCommits            0.014661
+network_count           0.047312
+open_issues_count       0.000000
+stargazers_count        0.000452
+subscribers_count       0.005030
+area                    0.000955
+mul                     0.000003
+Name: DarkNote, dtype: float64</pre></div><div id="DarkNote" style="width:600px; height:400px;"></div>
+<hr><div>BitcoinDark<pre>ActiveDays              3.000000
+ActiveDaysPercentage    5.000000
+TotalAuthors            1.000000
+TotalCommits            4.000000
+network_count           5.000000
+open_issues_count       2.000000
+stargazers_count        6.000000
+subscribers_count       2.000000
+area                    0.000186
+mul                     1.139582
+Name: BitcoinDark, dtype: float64</pre></div><div>BitcoinDark<pre>ActiveDays              0.002033
+ActiveDaysPercentage    0.050000
+TotalAuthors            0.002874
+TotalCommits            0.000465
+network_count           0.001075
+open_issues_count       0.004386
+stargazers_count        0.000905
+subscribers_count       0.002012
+area                    0.000040
+mul                     0.000002
+Name: BitcoinDark, dtype: float64</pre></div><div id="BitcoinDark" style="width:600px; height:400px;"></div>
+<hr><div>BlackCoin<pre>ActiveDays              1014.000000
+ActiveDaysPercentage      50.447761
+TotalAuthors             169.000000
+TotalCommits            4054.000000
+network_count            139.000000
+open_issues_count          9.000000
+stargazers_count          67.000000
+subscribers_count         48.000000
+area                       0.635419
+mul                       78.291780
+Name: BlackCoin, dtype: float64</pre></div><div>BlackCoin<pre>ActiveDays              0.686992
+ActiveDaysPercentage    0.504478
+TotalAuthors            0.485632
+TotalCommits            0.471724
+network_count           0.029892
+open_issues_count       0.019737
+stargazers_count        0.010104
+subscribers_count       0.048290
+area                    0.135472
+mul                     0.000149
+Name: BlackCoin, dtype: float64</pre></div><div id="BlackCoin" style="width:600px; height:400px;"></div>
+<hr><div>Clams<pre>ActiveDays              1050.000000
+ActiveDaysPercentage      51.954478
+TotalAuthors             178.000000
+TotalCommits            4502.000000
+network_count            139.000000
+open_issues_count         18.000000
+stargazers_count          12.000000
+subscribers_count         10.000000
+area                       0.694945
+mul                       85.690097
+Name: Clams, dtype: float64</pre></div><div>Clams<pre>ActiveDays              0.711382
+ActiveDaysPercentage    0.519545
+TotalAuthors            0.511494
+TotalCommits            0.523854
+network_count           0.029892
+open_issues_count       0.039474
+stargazers_count        0.001810
+subscribers_count       0.010060
+area                    0.148163
+mul                     0.000163
+Name: Clams, dtype: float64</pre></div><div id="Clams" style="width:600px; height:400px;"></div>
+<hr><div>DigiByte<pre>ActiveDays               63.000000
+ActiveDaysPercentage     16.800000
+TotalAuthors             10.000000
+TotalCommits            456.000000
+network_count            18.000000
+open_issues_count         1.000000
+stargazers_count         12.000000
+subscribers_count        13.000000
+area                      0.009838
+mul                       2.033625
+Name: DigiByte, dtype: float64</pre></div><div>DigiByte<pre>ActiveDays              0.042683
+ActiveDaysPercentage    0.168000
+TotalAuthors            0.028736
+TotalCommits            0.053060
+network_count           0.003871
+open_issues_count       0.002193
+stargazers_count        0.001810
+subscribers_count       0.013078
+area                    0.002098
+mul                     0.000004
+Name: DigiByte, dtype: float64</pre></div><div id="DigiByte" style="width:600px; height:400px;"></div>
+<hr><div>Unobtanium<pre>ActiveDays               27.000000
+ActiveDaysPercentage      5.314961
+TotalAuthors             12.000000
+TotalCommits            113.000000
+network_count             8.000000
+open_issues_count         0.000000
+stargazers_count          2.000000
+subscribers_count         3.000000
+area                      0.002511
+mul                       1.336872
+Name: Unobtanium, dtype: float64</pre></div><div>Unobtanium<pre>ActiveDays              0.018293
+ActiveDaysPercentage    0.053150
+TotalAuthors            0.034483
+TotalCommits            0.013149
+network_count           0.001720
+open_issues_count       0.000000
+stargazers_count        0.000302
+subscribers_count       0.003018
+area                    0.000535
+mul                     0.000003
+Name: Unobtanium, dtype: float64</pre></div><div id="Unobtanium" style="width:600px; height:400px;"></div>
+<hr><div>Novacoin<pre>ActiveDays               777.000000
+ActiveDaysPercentage      40.510949
+TotalAuthors             137.000000
+TotalCommits            3862.000000
+network_count            139.000000
+open_issues_count          0.000000
+stargazers_count           3.000000
+subscribers_count          6.000000
+area                       0.427799
+mul                       38.032188
+Name: Novacoin, dtype: float64</pre></div><div>Novacoin<pre>ActiveDays              0.526423
+ActiveDaysPercentage    0.405109
+TotalAuthors            0.393678
+TotalCommits            0.449383
+network_count           0.029892
+open_issues_count       0.000000
+stargazers_count        0.000452
+subscribers_count       0.006036
+area                    0.091207
+mul                     0.000072
+Name: Novacoin, dtype: float64</pre></div><div id="Novacoin" style="width:600px; height:400px;"></div>
+<hr><div>FuelCoin<pre>ActiveDays                1.000000
+ActiveDaysPercentage    100.000000
+TotalAuthors              1.000000
+TotalCommits              2.000000
+network_count             0.000000
+open_issues_count         0.000000
+stargazers_count          0.000000
+subscribers_count         2.000000
+area                      0.002724
+mul                       4.073697
+Name: FuelCoin, dtype: float64</pre></div><div>FuelCoin<pre>ActiveDays              0.000678
+ActiveDaysPercentage    1.000000
+TotalAuthors            0.002874
+TotalCommits            0.000233
+network_count           0.000000
+open_issues_count       0.000000
+stargazers_count        0.000000
+subscribers_count       0.002012
+area                    0.000581
+mul                     0.000008
+Name: FuelCoin, dtype: float64</pre></div><div id="FuelCoin" style="width:600px; height:400px;"></div>
+<hr><div>Ethercoin<pre>ActiveDays               853.000000
+ActiveDaysPercentage      46.133045
+TotalAuthors             158.000000
+TotalCommits            3358.000000
+network_count              0.000000
+open_issues_count          0.000000
+stargazers_count           0.000000
+subscribers_count          1.000000
+area                       0.495104
+mul                       38.906444
+Name: Ethercoin, dtype: float64</pre></div><div>Ethercoin<pre>ActiveDays              0.577913
+ActiveDaysPercentage    0.461330
+TotalAuthors            0.454023
+TotalCommits            0.390738
+network_count           0.000000
+open_issues_count       0.000000
+stargazers_count        0.000000
+subscribers_count       0.001006
+area                    0.105557
+mul                     0.000074
+Name: Ethercoin, dtype: float64</pre></div><div id="Ethercoin" style="width:600px; height:400px;"></div>
+<hr><div>ReddCoin<pre>ActiveDays              1069.000000
+ActiveDaysPercentage      53.290130
+TotalAuthors             207.000000
+TotalCommits            4895.000000
+network_count           4650.000000
+open_issues_count         34.000000
+stargazers_count         129.000000
+subscribers_count        134.000000
+area                       1.059299
+mul                      404.757576
+Name: ReddCoin, dtype: float64</pre></div><div>ReddCoin<pre>ActiveDays              0.724255
+ActiveDaysPercentage    0.532901
+TotalAuthors            0.594828
+TotalCommits            0.569583
+network_count           1.000000
+open_issues_count       0.074561
+stargazers_count        0.019454
+subscribers_count       0.134809
+area                    0.225844
+mul                     0.000770
+Name: ReddCoin, dtype: float64</pre></div><div id="ReddCoin" style="width:600px; height:400px;"></div>
+<hr><div>Quark<pre>ActiveDays              43.000000
+ActiveDaysPercentage     7.426598
+TotalAuthors             8.000000
+TotalCommits            79.000000
+network_count           54.000000
+open_issues_count        4.000000
+stargazers_count        60.000000
+subscribers_count       37.000000
+area                     0.003667
+mul                      1.614466
+Name: Quark, dtype: float64</pre></div><div>Quark<pre>ActiveDays              0.029133
+ActiveDaysPercentage    0.074266
+TotalAuthors            0.022989
+TotalCommits            0.009192
+network_count           0.011613
+open_issues_count       0.008772
+stargazers_count        0.009048
+subscribers_count       0.037223
+area                    0.000782
+mul                     0.000003
+Name: Quark, dtype: float64</pre></div><div id="Quark" style="width:600px; height:400px;"></div>
+<hr><div>Mintcoin<pre>ActiveDays               54.000000
+ActiveDaysPercentage     13.567839
+TotalAuthors             12.000000
+TotalCommits            105.000000
+network_count             3.000000
+open_issues_count         1.000000
+stargazers_count          3.000000
+subscribers_count         4.000000
+area                      0.007155
+mul                       1.589023
+Name: Mintcoin, dtype: float64</pre></div><div>Mintcoin<pre>ActiveDays              0.036585
+ActiveDaysPercentage    0.135678
+TotalAuthors            0.034483
+TotalCommits            0.012218
+network_count           0.000645
+open_issues_count       0.002193
+stargazers_count        0.000452
+subscribers_count       0.004024
+area                    0.001526
+mul                     0.000003
+Name: Mintcoin, dtype: float64</pre></div><div id="Mintcoin" style="width:600px; height:400px;"></div>
+<hr><div>XCurrency<pre>ActiveDays              11.000000
+ActiveDaysPercentage     4.365079
+TotalAuthors             1.000000
+TotalCommits            44.000000
+network_count            1.000000
+open_issues_count        1.000000
+stargazers_count         0.000000
+subscribers_count        1.000000
+area                     0.000310
+mul                      1.139431
+Name: XCurrency, dtype: float64</pre></div><div>XCurrency<pre>ActiveDays              0.007453
+ActiveDaysPercentage    0.043651
+TotalAuthors            0.002874
+TotalCommits            0.005120
+network_count           0.000215
+open_issues_count       0.002193
+stargazers_count        0.000000
+subscribers_count       0.001006
+area                    0.000066
+mul                     0.000002
+Name: XCurrency, dtype: float64</pre></div><div id="XCurrency" style="width:600px; height:400px;"></div>
+<hr></body></html>
