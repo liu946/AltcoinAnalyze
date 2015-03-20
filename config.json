@@ -2,9 +2,9 @@
 	"repo_dir": "./altcoins/",
  	"cache_dir": "./cache/",
   	"gitstats_dir": "./stats/",
-   	"stats_factors": ["TotalCommits"],
+   	"stats_factors": ["TotalCommits","ActiveDays","ActiveDaysPercentage","TotalAuthors"],
    	"stats_factors_weight":[1,2,3,4],
-    "api_factors": ["stargazers_count"],
+    "api_factors": ["stargazers_count","subscribers_count","network_count","open_issues_count"],
     "api_factors_weight":[1,2,3,4],
     "sync": false, 
     "sync_rate": 86400
